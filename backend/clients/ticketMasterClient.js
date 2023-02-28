@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_KEY = '7elxdku9GGG5k8j0Xm8KWdANDgecHMV0';
+import * as dotenv from 'dotenv';
 
 class TicketmasterClient {
   constructor() {
@@ -9,7 +9,7 @@ class TicketmasterClient {
   async getEvents(latlong, radius) {
     const response = await axios.get(`${this.baseUrl}/events`, {
       params: {
-        apikey: API_KEY,
+        apikey: process.env.TICKETMASTER_API_KEY,
         latlong,
         radius,
         unit: 'miles',
