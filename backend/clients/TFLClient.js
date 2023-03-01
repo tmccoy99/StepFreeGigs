@@ -1,5 +1,4 @@
-import axios from 'axios';
-import * as dotenv from 'dotenv';
+const axios = require('axios');
 const tflAPIKey = require('../tflAPIKey');
 const tflAPIId = require('../tflAPIId');
 
@@ -11,7 +10,6 @@ class TFLCLient {
   async getDirections(start, destination) {
     const response = await axios.get(
       `${this.baseUrl}/${start}/to/${destination}?accessibilityPreference=StepFreeToVehicle&app_key=${tflAPIKey}&app_id=${tflAPIId}`
-      //   `${this.baseUrl}/${start}/to/${destination}?accessibilityPreference=StepFreeToVehicle&app_key=3adf942d451a48d08cae4f7113fa1a9a&app_id=3a4a22c930c04133b895fcf72627f336`
     );
 
     const directions = {
@@ -29,4 +27,4 @@ class TFLCLient {
 // const client = new TFLCLient();
 // console.log(client.getDirections('SW99QH', 'SW99SL'));
 
-export default TFLCLient;
+module.exports = TFLCLient;
