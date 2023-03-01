@@ -1,6 +1,6 @@
 const axios = require('axios');
-const tflAPIKey = require('../tfl-api-key');
-const tflAPIId = require('../tfl-api-id');
+const tflAPIKey = require('../tflAPIKey');
+const tflAPIId = require('../tflAPIId');
 
 class TFLCLient {
   constructor() {
