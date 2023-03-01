@@ -38,7 +38,5 @@ class TicketmasterClient {
     console.error(error);
   }
 }
-const client = new TicketmasterClient();
-const events = await client.getEvents('51.4919120,-0.1692555', 5);
-console.log(events);
+
 module.exports = TicketmasterClient;
