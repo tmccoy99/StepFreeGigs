@@ -3,10 +3,10 @@ const port = 3000
 const app = express()
 
 const eventsRouter = require('./routes/events')
-const routeRouter = require('./routes/route')
+const journeyRouter = require('./routes/journey')
 
 app.use('/events', eventsRouter)
-app.use('/route', routeRouter)
+app.use('/journey', journeyRouter)
 
 if (process.env.NODE_ENV !== 'test'){
 app.listen(port, () => {
