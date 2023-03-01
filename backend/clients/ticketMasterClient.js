@@ -43,9 +43,9 @@ class TicketmasterClient {
 }
 
 // THIS CAN BE DELETED - Just here to check API keys work
-const client = new TicketmasterClient();
-client
-  .getEvents('51.4919120,-0.1692555', 5)
-  .then((response) => console.log(response));
+// const client = new TicketmasterClient();
+// client
+//   .getEvents('51.4919120,-0.1692555', 5)
+//   .then((response) => console.log(response));
 
 module.exports = TicketmasterClient;
