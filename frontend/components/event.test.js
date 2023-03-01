@@ -17,4 +17,18 @@ describe('Event component testing', () => {
     const textElement = getByText('£22 - £30 ');
     expect(textElement).toBeDefined();
   });
+
+  test('it displays the venue', () => {
+    const { getByText } = render(<Event eventData={{ venue: 'The Garage' }} />);
+    const textElement = getByText('The Garage');
+    expect(textElement).toBeDefined();
+  });
+
+  // test('it displays the Date', () => {
+  //   const { getByText } = render(
+  //     <Event eventData={{ date: '2023-03-01T19:00:00Z' }} />
+  //   );
+  //   const textElement = getByText('2023-03-01T19:00:00Z');
+  //   expect(textElement).toBeDefined();
+  // });
 });
