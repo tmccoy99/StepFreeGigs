@@ -1,5 +1,5 @@
 import axios from 'axios';
-import TicketmasterClient from '../../backend/clients/ticketMasterClient';
+import TicketmasterClient from '../../clients/ticketMasterClient';
 
 jest.mock('axios');
 
