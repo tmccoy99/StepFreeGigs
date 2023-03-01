@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import Event from './event';
 
 describe('Event component testing', () => {
@@ -31,4 +31,19 @@ describe('Event component testing', () => {
   //   const textElement = getByText('2023-03-01T19:00:00Z');
   //   expect(textElement).toBeDefined();
   // });
+
+  test('Buy tickets button is rendered', () => {
+    const { getByText } = render(<Event eventData={{}} />);
+    const getTicketsButton = getByText('Buy Tickets');
+    expect(getTicketsButton).toBeDefined();
+  });
+
+  test('Pressing buy tickets takes you to given url', () => {
+    const mockNavigate = jest.fn();
+    const { getByText } = render(
+      <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
+    );
+    fireEvent.press(getByText('Buy Tickets'));
+    expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
+  });
 });

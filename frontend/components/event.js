@@ -1,14 +1,20 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
-export default function Event({ eventData }) {
-  const { eventName, priceRanges, venue } = eventData;
+export default function Event({ eventData, navigate }) {
+  const { eventName, priceRanges, venue, url } = eventData;
   return (
     <View>
       <Text>{eventName}</Text>
       <Text>{priceRanges}</Text>
       {/* <Text>{date}</Text> */}
       <Text>{venue}</Text>
+      <Button
+        title='Buy Tickets'
+        onPress={() => {
+          navigate(url);
+        }}
+      />
     </View>
   );
 }
