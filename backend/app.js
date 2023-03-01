@@ -1,16 +1,16 @@
 const express = require('express')
-const app = express()
 const port = 3000
+const app = express()
 
-app.get('/events', (req, res) => {
-  res.send('return the events near the user')
-})
+const eventsRouter = require('./routes/events')
+const routeRouter = require('./routes/route')
 
-app.get('/route', (req, res) => {
-  res.send('return the route as an object')
-})
+app.use('/events', eventsRouter)
+app.use('/route', routeRouter)
 
-
+if (process.env.NODE_ENV !== 'test'){
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)
-})
+  })
+}
+module.exports = app
