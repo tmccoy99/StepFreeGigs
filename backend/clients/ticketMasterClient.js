@@ -31,6 +31,8 @@ class TicketmasterClient {
         venue: event._embedded.venues[0].name,
         venueAddress: event._embedded.venues[0].address.line1,
         venuePostcode: event._embedded.venues[0].postalCode,
+        image: event.images[0].url,
+        distance: `${event.distance} miles`,
       };
     });
     return events;
@@ -41,9 +43,9 @@ class TicketmasterClient {
 }
 
 // THIS CAN BE DELETED - Just here to check API keys work
-// const client = new TicketmasterClient();
-// client
-//   .getEvents('51.4919120,-0.1692555', 5)
-//   .then((response) => console.log(response));
+const client = new TicketmasterClient();
+client
+  .getEvents('51.4919120,-0.1692555', 5)
+  .then((response) => console.log(response));
 
 module.exports = TicketmasterClient;
