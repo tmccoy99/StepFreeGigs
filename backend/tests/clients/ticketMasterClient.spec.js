@@ -1,5 +1,5 @@
-import axios from 'axios';
-import TicketmasterClient from '../../clients/ticketMasterClient';
+const axios = require('axios');
+const TicketmasterClient = require('../../clients/ticketMasterClient');
 
 jest.mock('axios');
 

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as dotenv from 'dotenv';
+const axios = require('axios');
+const dotenv = require('dotenv');
 
 class TicketmasterClient {
   constructor() {
@@ -38,5 +38,7 @@ class TicketmasterClient {
     console.error(error);
   }
 }
-
-export default TicketmasterClient;
+const client = new TicketmasterClient();
+const events = await client.getEvents('51.4919120,-0.1692555', 5);
+console.log(events);
+module.exports = TicketmasterClient;
