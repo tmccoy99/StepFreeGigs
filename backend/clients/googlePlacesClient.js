@@ -43,7 +43,4 @@ class googlePlacesClient {
   }
 }
 
-// https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=02 academy brixton&key=AIzaSyCWa4yzQIq6CfYifNWcWROeXlFiWp44TAo
-
-// https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJL1UqD2cEdkgRidF8HHIq4fQ&key=AIzaSyCWa4yzQIq6CfYifNWcWROeXlFiWp44TAo&fields=wheelchair_accessible_entrance%2Caddress_component
 module.exports = googlePlacesClient;
