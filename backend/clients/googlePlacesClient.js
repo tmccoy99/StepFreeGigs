@@ -5,6 +5,8 @@ class googlePlacesClient {
   constructor() {
     this.baseUrlPlaceId =
       'https://maps.googleapis.com/maps/api/place/findplacefromtext';
+    this.baseUrlPlaceDetails =
+      'https://maps.googleapis.com/maps/api/place/details';
   }
 
   async getPlaceId(venueName) {
@@ -19,10 +21,29 @@ class googlePlacesClient {
     return venuePlaceId;
   }
 
+  async getPlaceDetails(placeId) {
+    const response = await axios.get(
+      `${this.baseUrlPlaceDetails}/json?place_id=${placeId}&key=${googleAPIKey}&fields=wheelchair_accessible_entrance%2Caddress_component`
+    );
+
+    const venueDetails = {
+      wheelchair_accessible_entrance:
+        response.result.wheelchair_accessible_entrance,
+      postCode:
+        response.result.address_components[
+          response.result.address_components.length - 1
+        ].long_name,
+    };
+
+    return venueDetails;
+  }
+
   catch(error) {
     console.error(error);
   }
 }
 
 // https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=02 academy brixton&key=AIzaSyCWa4yzQIq6CfYifNWcWROeXlFiWp44TAo
+
+// https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJL1UqD2cEdkgRidF8HHIq4fQ&key=AIzaSyCWa4yzQIq6CfYifNWcWROeXlFiWp44TAo&fields=wheelchair_accessible_entrance%2Caddress_component
 module.exports = googlePlacesClient;

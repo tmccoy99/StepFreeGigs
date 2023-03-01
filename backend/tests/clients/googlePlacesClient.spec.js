@@ -36,7 +36,7 @@ describe('Google places Client', () => {
     );
   });
 
-  it('getPlaceDetails returns a postcode and wheel chair accessible boolean', async () => {
+  it('getPlaceDetails returns a postcode and wheel chair accessible boolean is true', async () => {
     const mockResponse = {
       html_attributions: [],
       result: {
