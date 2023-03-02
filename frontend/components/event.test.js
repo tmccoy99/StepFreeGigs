@@ -68,14 +68,15 @@ describe('Event component testing', () => {
     expect(getTicketsButton).toBeDefined();
   });
 
-  // test('Pressing buy tickets takes you to given url', () => {
-  //   const mockNavigate = jest.fn();
-  //   const { getByText } = render(
-  //     <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
-  //   );
-  //   fireEvent.press(getByText('Buy Tickets'));
-  //   expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
-  // });
+  test('Pressing buy tickets takes you to given url', () => {
+    const mockNavigate = jest.fn();
+    const { getByText, getByTestId } = render(
+      <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
+    );
+    fireEvent.press(getByTestId('eventButton'));
+    fireEvent.press(getByText('Buy Tickets'));
+    expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
+  });
 
   // test('Pressing view route takes you to given url', () => {
   //   const mockNavigate = jest.fn();
