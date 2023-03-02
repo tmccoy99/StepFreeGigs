@@ -8,9 +8,11 @@ describe('journeyController', () => {
   describe('without any query parameters', () => {
     it('should respond with status 400', async () => {
       response = await request(app).get('/journey');
+
       expect(response.status).toEqual(400);
       expect(response.text).toContain('Bad request');
     });
+
     it('should respond with status 400 for missing start postcode', async () => {
       response = await request(app)
         .get('/journey')
