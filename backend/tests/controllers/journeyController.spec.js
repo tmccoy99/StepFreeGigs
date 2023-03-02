@@ -24,4 +24,23 @@ describe('journeyController', () => {
       expect(response.text).toContain('Bad request');
     });
   });
+  describe('with invalid query parameters', () => {
+    it('should respond with status 400 for invalid start postcode', async () => {
+      const response = await request(app)
+        .get('/journey')
+        .query({ start: 'invalid_postcode', destination: 'SW1A 2AA' });
+
+      expect(response.status).toEqual(400);
+      expect(response.text).toContain('Invalid postcode format');
+    });
+
+    it('should respond with status 400 for invalid destination postcode', async () => {
+      const response = await request(app)
+        .get('/journey')
+        .query({ start: 'NW1 5LA', destination: 'invalid_postcode' });
+
+      expect(response.status).toEqual(400);
+      expect(response.text).toContain('Invalid postcode format');
+    });
+  });
 });
