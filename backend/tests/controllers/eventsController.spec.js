@@ -84,7 +84,7 @@ describe('eventsController', () => {
       expect(getEventsSpy).toHaveBeenCalledWith('51.4919120,-0.1692555', '5');
     });
 
-    it('calls the googleplaces client getplaceid method', async () => {
+    it('calls the googleplaces client getPlaceId method', async () => {
       getPlaceIdSpy.mockResolvedValueOnce(mockPlaceId);
       getEventsSpy.mockResolvedValueOnce(mockEvents);
 
@@ -106,7 +106,7 @@ describe('eventsController', () => {
       expect(getVenueDetailsSpy).toHaveBeenCalledWith('testPlaceId');
     });
 
-    it('returns an array of events that are wheelchair accessible', async () => {
+    it('returns an array of events that are wheelchair accessible in the response body', async () => {
       getEventsSpy.mockResolvedValueOnce(mockEvents);
       getPlaceIdSpy.mockResolvedValueOnce(mockPlaceId);
       getVenueDetailsSpy.mockResolvedValueOnce(mockVenueDetails);
