@@ -33,7 +33,6 @@ const mockEvents = [
   },
 ];
 
-const mockVenueName = 'Test Venue 1';
 const mockPlaceId = {
   placeId: 'testPlaceId',
 };
