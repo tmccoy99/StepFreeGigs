@@ -24,15 +24,16 @@ const EventsController = {
 
 async function getAccessibleEvents(events, googleClient) {
   const accessibleEvents = [];
-  for (let i = 0; i < events.length && accessibleEvents.length < 5; i++) {
-    const event = events[i];
+  for (const event of events) {
+    if (accessibleEvents.length === 5) break;
+
     const venueName = event.venue;
     const placeId = await googleClient.getPlaceId(venueName);
-    if (placeId) {
-      const venueDetails = await googleClient.getVenueDetails(placeId.placeId);
-      if (venueDetails && venueDetails.wheelchair_accessible_entrance) {
-        accessibleEvents.push(event);
-      }
+    if (!placeId) continue;
+
+    const venueDetails = await googleClient.getVenueDetails(placeId.placeId);
+    if (venueDetails && venueDetails.wheelchair_accessible_entrance) {
+      accessibleEvents.push(event);
     }
   }
   return accessibleEvents;

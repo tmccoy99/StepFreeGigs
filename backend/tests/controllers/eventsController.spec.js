@@ -85,7 +85,7 @@ describe('eventsController', () => {
     });
 
     it('calls the googleplaces client getplaceid method', async () => {
-      getPlaceIdSpy.mockResolvedValue(mockVenueName);
+      getPlaceIdSpy.mockResolvedValueOnce(mockPlaceId);
       getEventsSpy.mockResolvedValueOnce(mockEvents);
 
       response = await request(app)
