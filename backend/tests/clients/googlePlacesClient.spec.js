@@ -1,5 +1,5 @@
 const axios = require('axios');
-const googlePlacesClient = require('../../clients/googlePlacesClient');
+const GooglePlacesClient = require('../../clients/googlePlacesClient');
 
 jest.mock('axios');
 
@@ -18,7 +18,7 @@ describe('Google places Client', () => {
     };
     axios.get.mockResolvedValue(mockResponse);
 
-    const client = new googlePlacesClient();
+    const client = new GooglePlacesClient();
     const placeId = await client.getPlaceId('02 academy brixton');
 
     expect(placeId).toEqual({
@@ -39,7 +39,7 @@ describe('Google places Client', () => {
     };
     axios.get.mockResolvedValue(mockResponse);
 
-    const client = new googlePlacesClient();
+    const client = new GooglePlacesClient();
     const placeId = await client.getPlaceId('02 acadEmy BrixTTon');
 
     expect(placeId).toEqual({
@@ -51,7 +51,7 @@ describe('Google places Client', () => {
     const mockError = new Error('Network Error');
     axios.get.mockRejectedValue(mockError);
 
-    const client = new googlePlacesClient();
+    const client = new GooglePlacesClient();
 
     await expect(client.getPlaceId('02 academy brixton')).rejects.toThrow(
       'Network Error'
@@ -107,7 +107,7 @@ describe('Google places Client', () => {
     };
     axios.get.mockResolvedValue(mockResponse);
 
-    const client = new googlePlacesClient();
+    const client = new GooglePlacesClient();
     const venueDetails = await client.getVenueDetails('02 academy brixton');
 
     expect(venueDetails).toEqual({
@@ -120,7 +120,7 @@ describe('Google places Client', () => {
     const mockError = new Error('Network Error');
     axios.get.mockRejectedValue(mockError);
 
-    const client = new googlePlacesClient();
+    const client = new GooglePlacesClient();
 
     await expect(client.getVenueDetails('02 academy brixton')).rejects.toThrow(
       'Network Error'
