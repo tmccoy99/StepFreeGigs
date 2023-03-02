@@ -76,10 +76,11 @@ describe('eventsController', () => {
     });
 
     it('calls the ticketMaster client class', async () => {
+      getEventsSpy.mockResolvedValueOnce(mockEvents);
+
       response = await request(app)
         .get('/events')
         .query({ latlong: '51.4919120,-0.1692555', radius: '5' });
-
       expect(getEventsSpy).toHaveBeenCalledWith('51.4919120,-0.1692555', '5');
     });
 
@@ -103,6 +104,21 @@ describe('eventsController', () => {
         .query({ latlong: '51.4919120,-0.1692555', radius: '5' });
 
       expect(getVenueDetailsSpy).toHaveBeenCalledWith('testPlaceId');
+    });
+
+    it('returns an array of events that are wheelchair accessible', async () => {
+      getEventsSpy.mockResolvedValueOnce(mockEvents);
+      getPlaceIdSpy.mockResolvedValueOnce(mockPlaceId);
+      getVenueDetailsSpy.mockResolvedValueOnce(mockVenueDetails);
+
+      const response = await request(app)
+        .get('/events')
+        .query({ latlong: '51.4919120,-0.1692555', radius: '5' });
+
+      const accessibleEvents = response.body.accessibleEvents;
+      expect(Array.isArray(accessibleEvents)).toBe(true);
+      expect(accessibleEvents.length).toBe(1);
+      expect(accessibleEvents).toEqual([mockEvents[0]]);
     });
   });
 });
