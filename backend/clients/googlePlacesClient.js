@@ -15,7 +15,7 @@ class googlePlacesClient {
     );
 
     const venuePlaceId = {
-      placeId: response.candidates[0].place_id,
+      placeId: response.data.candidates[0].place_id,
     };
 
     return venuePlaceId;
@@ -28,10 +28,10 @@ class googlePlacesClient {
 
     const venueDetails = {
       wheelchair_accessible_entrance:
-        response.result.wheelchair_accessible_entrance,
+        response.data.result.wheelchair_accessible_entrance,
       postCode:
-        response.result.address_components[
-          response.result.address_components.length - 1
+        response.data.result.address_components[
+          response.data.result.address_components.length - 1
         ].long_name,
     };
 
@@ -42,5 +42,11 @@ class googlePlacesClient {
     console.error(error);
   }
 }
+
+// const client = new googlePlacesClient();
+// client
+//   .getPlaceId('O2 Brixton Academy')
+//   .then((response) => client.getVenueDetails(response.placeId))
+//   .then((response) => console.log(response));
 
 module.exports = googlePlacesClient;
