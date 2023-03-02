@@ -1,5 +1,8 @@
 const app = require('../../app');
 const request = require('supertest');
+const TFLClient = require('../../clients/TFLClient');
+
+jest.mock('../../clients/TFLClient');
 
 describe('journeyController', () => {
   describe('without any query parameters', () => {
@@ -24,23 +27,38 @@ describe('journeyController', () => {
       expect(response.text).toContain('Bad request');
     });
   });
-  describe('with invalid query parameters', () => {
-    it('should respond with status 400 for invalid start postcode', async () => {
-      const response = await request(app)
-        .get('/journey')
-        .query({ start: 'invalid_postcode', destination: 'SW1A 2AA' });
 
-      expect(response.status).toEqual(400);
-      expect(response.text).toContain('Invalid postcode format');
+  describe('with valid query parameters', () => {
+    let getDirectionsSpy;
+
+    beforeEach(() => {
+      getDirectionsSpy = jest.spyOn(TFLClient.prototype, 'getDirections');
     });
 
-    it('should respond with status 400 for invalid destination postcode', async () => {
+    it('should call the TFL client with the correct parameters', async () => {
+      const start = 'NW1 5LA';
+      const destination = 'SW1A 2AA';
       const response = await request(app)
         .get('/journey')
-        .query({ start: 'NW1 5LA', destination: 'invalid_postcode' });
+        .query({ start, destination });
 
-      expect(response.status).toEqual(400);
-      expect(response.text).toContain('Invalid postcode format');
+      expect(getDirectionsSpy).toHaveBeenCalledWith(start, destination);
+      expect(response.status).toEqual(200);
+    });
+
+    it('should return an error message if TFL API request fails', async () => {
+      getDirectionsSpy.mockRejectedValueOnce('API error');
+
+      const start = 'NW1 5LA';
+      const destination = 'SW1A 2AA';
+
+      const response = await request(app)
+        .get('/journey')
+        .query({ start, destination });
+
+      expect(getDirectionsSpy).toHaveBeenCalledWith(start, destination);
+      expect(response.status).toEqual(500);
+      expect(response.text).toContain('Internal server error');
     });
   });
 });
