@@ -1,14 +1,15 @@
 import { render } from '@testing-library/react-native';
 import JourneyScreen from './journeyScreen';
-const axios = require('axios');
-jest.mock('axios');
+import mockAxios from 'jest-mock-axios';
 
 describe('Journey Screen component testing', () => {
   test('it displays the title', () => {
     const renderedComponent = render(<JourneyScreen />);
     expect(renderedComponent.getByText('Directions')).toBeDefined();
   });
-  test('it renders a leg', () => {
+  
+  test('it renders a leg', async () => {
+
     const mockResponse = {
       journeys: [
         {
@@ -661,12 +662,14 @@ describe('Journey Screen component testing', () => {
       ],
     };
 
-    axios.get.mockResolvedValue(mockResponse);
+    mockAxios.mockResponse(mockResponse);
 
     const renderedComponent = render(
       <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
     );
 
     expect(renderedComponent.getByTestId('leg')).toBeDefined();
+    // expand this to include the start and end location as queries
+    expect(mockAxios.get).toHaveBeenCalledWith('localhost:3000')
   });
 });
