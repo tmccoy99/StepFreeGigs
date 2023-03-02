@@ -4,11 +4,26 @@ const googlePlacesClient = require('../../clients/googlePlacesClient');
 jest.mock('axios');
 
 describe('Google places Client', () => {
-  it('getPlaceId returns a place id, name and address', async () => {
+  it('getPlaceId returns a place id', async () => {
+    const mockResponse = {
+      candidates: [
+        { name: 'O2 Academy Brixton', place_id: 'ChIJL1UqD2cEdkgRidF8HHIq4fQ' },
+      ],
+      status: 'OK',
+    };
+    axios.get.mockResolvedValue(mockResponse);
+
+    const client = new googlePlacesClient();
+    const placeId = await client.getPlaceId('02 academy brixton');
+
+    expect(placeId).toEqual({
+      placeId: 'ChIJL1UqD2cEdkgRidF8HHIq4fQ',
+    });
+  });
+  it('getPlaceId returns a place id with mispelt venue + capital letters', async () => {
     const mockResponse = {
       candidates: [
         {
-          formatted_address: '211 Stockwell Rd, London SW9 9SL, United Kingdom',
           name: 'O2 Academy Brixton',
           place_id: 'ChIJL1UqD2cEdkgRidF8HHIq4fQ',
         },
@@ -18,7 +33,7 @@ describe('Google places Client', () => {
     axios.get.mockResolvedValue(mockResponse);
 
     const client = new googlePlacesClient();
-    const placeId = await client.getPlaceId('02 academy brixton');
+    const placeId = await client.getPlaceId('02 acadEmy BrixTTon');
 
     expect(placeId).toEqual({
       placeId: 'ChIJL1UqD2cEdkgRidF8HHIq4fQ',
@@ -36,7 +51,7 @@ describe('Google places Client', () => {
     );
   });
 
-  it('getPlaceDetails returns a postcode and wheel chair accessible boolean is true', async () => {
+  it('getVenueDetails returns a postcode and wheel chair accessible boolean is true', async () => {
     const mockResponse = {
       html_attributions: [],
       result: {
@@ -84,11 +99,22 @@ describe('Google places Client', () => {
     axios.get.mockResolvedValue(mockResponse);
 
     const client = new googlePlacesClient();
-    const placeId = await client.getPlaceDetails('02 academy brixton');
+    const venueDetails = await client.getVenueDetails('02 academy brixton');
 
-    expect(placeId).toEqual({
+    expect(venueDetails).toEqual({
       wheelchair_accessible_entrance: true,
       postCode: 'SW9 9SL',
     });
+  });
+
+  it('getVenueDetails throws an error', async () => {
+    const mockError = new Error('Network Error');
+    axios.get.mockRejectedValue(mockError);
+
+    const client = new googlePlacesClient();
+
+    await expect(client.getVenueDetails('02 academy brixton')).rejects.toThrow(
+      'Network Error'
+    );
   });
 });

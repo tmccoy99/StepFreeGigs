@@ -21,7 +21,7 @@ class googlePlacesClient {
     return venuePlaceId;
   }
 
-  async getPlaceDetails(placeId) {
+  async getVenueDetails(placeId) {
     const response = await axios.get(
       `${this.baseUrlPlaceDetails}/json?place_id=${placeId}&key=${googleAPIKey}&fields=wheelchair_accessible_entrance%2Caddress_component`
     );
