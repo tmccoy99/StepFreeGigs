@@ -25,11 +25,10 @@ describe('Event component testing', () => {
   });
 
   test('it displays the distance from the user', () => {
-    const { getByText } = render(
+    const renderedComponent = render(
       <Event eventData={{ distance: '1.32 miles' }} />
     );
-    const textElement = getByText('1.32 miles');
-    expect(textElement).toBeDefined();
+    expect(renderedComponent.getByText('1.32 miles')).toBeDefined();
   });
 
   // test('it displays the Date', () => {

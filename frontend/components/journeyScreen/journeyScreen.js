@@ -1,0 +1,6 @@
+const JourneyScreen = ({navigation}) => {
+  return(
+    <>
+    </>
+  )
+}
