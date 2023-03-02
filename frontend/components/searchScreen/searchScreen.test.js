@@ -7,4 +7,10 @@ describe('SearchScreen component testing', () => {
     const textElement = getByText('StepFreeGigs');
     expect(textElement).toBeDefined();
   });
+
+  it('Should display the logo image', () => {
+    const { getByTestId } = render(<SearchScreen />);
+    const logoElement = getByTestId('logo');
+    expect(logoElement).toBeDefined();
+  })
 });
