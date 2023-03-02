@@ -1,7 +1,7 @@
 const axios = require('axios');
 const googleAPIKey = require('../googleAPIKey');
 
-class googlePlacesClient {
+class GooglePlacesClient {
   constructor() {
     this.baseUrlPlaceId =
       'https://maps.googleapis.com/maps/api/place/findplacefromtext';
@@ -43,10 +43,10 @@ class googlePlacesClient {
   }
 }
 
-// const client = new googlePlacesClient();
+// const client = new GooglePlacesClient();
 // client
 //   .getPlaceId('O2 Brixton Academy')
 //   .then((response) => client.getVenueDetails(response.placeId))
 //   .then((response) => console.log(response));
 
-module.exports = googlePlacesClient;
+module.exports = GooglePlacesClient;
