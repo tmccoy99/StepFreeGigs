@@ -54,12 +54,12 @@ describe('Event component testing', () => {
     }).toThrow(new Error('Unable to find an element with text: View Route'));
   });
 
-  // test('Buy tickets button is rendered after event is pressed', () => {
-  //   const { getByText } = render(<Event eventData={{}} />);
-
-  //   const getTicketsButton = getByText('Buy Tickets');
-  //   expect(getTicketsButton).toBeDefined();
-  // });
+  test('Buy tickets button is rendered after event is pressed', () => {
+    const {getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'))
+    const getTicketsButton = getByText('Buy Tickets');
+    expect(getTicketsButton).toBeDefined();
+  });
 
   // test('Pressing buy tickets takes you to given url', () => {
   //   const mockNavigate = jest.fn();
