@@ -30,7 +30,7 @@ describe('Event component testing', () => {
     );
     const textElement = getByText('1.32 miles');
     expect(textElement).toBeDefined();
-  })
+  });
 
   // test('it displays the Date', () => {
   //   const { getByText } = render(
@@ -55,9 +55,16 @@ describe('Event component testing', () => {
   });
 
   test('Buy tickets button is rendered after event is pressed', () => {
-    const {getByText, getByTestId } = render(<Event eventData={{}} />);
-    fireEvent.press(getByTestId('eventButton'))
+    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'));
     const getTicketsButton = getByText('Buy Tickets');
+    expect(getTicketsButton).toBeDefined();
+  });
+
+  test('View Route button is rendered after event is pressed', () => {
+    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'));
+    const getTicketsButton = getByText('View Route');
     expect(getTicketsButton).toBeDefined();
   });
 
