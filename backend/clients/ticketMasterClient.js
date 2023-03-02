@@ -1,5 +1,5 @@
 const axios = require('axios');
-const dotenv = require('dotenv');
+
 const ticketMasterAPIKey = require('../ticketMasterAPIKey');
 
 class TicketmasterClient {
