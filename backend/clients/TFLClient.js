@@ -25,6 +25,8 @@ class TFLCLient {
 }
 
 // const client = new TFLCLient();
-// console.log(client.getDirections('SW99QH', 'SW99SL'));
+// client
+//   .getDirections('SW99QH', 'SW99SL')
+//   .then((response) => console.log(response));
 
 module.exports = TFLCLient;
