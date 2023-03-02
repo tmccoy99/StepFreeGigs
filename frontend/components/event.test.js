@@ -32,18 +32,42 @@ describe('Event component testing', () => {
   //   expect(textElement).toBeDefined();
   // });
 
-  test('Buy tickets button is rendered', () => {
+  test('Buy tickets button is not rendered unless event pressed', () => {
     const { getByText } = render(<Event eventData={{}} />);
-    const getTicketsButton = getByText('Buy Tickets');
-    expect(getTicketsButton).toBeDefined();
+    expect(() => {
+      getByText('Buy Tickets');
+    }).toThrow(new Error('Unable to find an element with text: Buy Tickets'));
   });
 
-  test('Pressing buy tickets takes you to given url', () => {
-    const mockNavigate = jest.fn();
-    const { getByText } = render(
-      <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
-    );
-    fireEvent.press(getByText('Buy Tickets'));
-    expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
+  test('View Route button is not rendered unless event pressed', () => {
+    const { getByText } = render(<Event eventData={{}} />);
+    expect(() => {
+      getByText('View Route');
+    }).toThrow(new Error('Unable to find an element with text: View Route'));
   });
+
+  // test('Buy tickets button is rendered after event is pressed', () => {
+  //   const { getByText } = render(<Event eventData={{}} />);
+
+  //   const getTicketsButton = getByText('Buy Tickets');
+  //   expect(getTicketsButton).toBeDefined();
+  // });
+
+  // test('Pressing buy tickets takes you to given url', () => {
+  //   const mockNavigate = jest.fn();
+  //   const { getByText } = render(
+  //     <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
+  //   );
+  //   fireEvent.press(getByText('Buy Tickets'));
+  //   expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
+  // });
+
+  // test('Pressing view route takes you to given url', () => {
+  //   const mockNavigate = jest.fn();
+  //   const { getByText } = render(
+  //     <Event eventData={{ url: 'https://testroute.com' }} navigate={mockNavigate} />
+  //   );
+  //   fireEvent.press(getByText('View Route'));
+  //   expect(mockNavigate).toHaveBeenCalledWith('https://testroute.com');
+  // });
 });

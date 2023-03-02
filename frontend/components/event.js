@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Text, View } from 'react-native';
 
 export default function Event({ eventData, navigate }) {
   const { eventName, priceRanges, venue, url } = eventData;
+  const [isExpanded, setExpanded] = useState(false);
+
   return (
     <View>
       <Text>{eventName}</Text>
       <Text>{priceRanges}</Text>
       {/* <Text>{date}</Text> */}
       <Text>{venue}</Text>
-      <Button
-        title='Buy Tickets'
-        onPress={() => {
-          navigate(url);
-        }}
-      />
+      {isExpanded && (
+        <>
+          <Button
+            title='Buy Tickets'
+            onPress={() => {
+              navigate(url);
+            }}
+          />
+          <Button
+            title='View Route'
+            onPress={() => {
+              navigate(url);
+            }}
+          />{' '}
+        </>
+      )}
     </View>
   );
 }
