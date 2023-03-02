@@ -78,12 +78,31 @@ describe('Event component testing', () => {
     expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
   });
 
-  // test('Pressing view route takes you to given url', () => {
-  //   const mockNavigate = jest.fn();
-  //   const { getByText } = render(
-  //     <Event eventData={{ url: 'https://testroute.com' }} navigate={mockNavigate} />
-  //   );
-  //   fireEvent.press(getByText('View Route'));
-  //   expect(mockNavigate).toHaveBeenCalledWith('https://testroute.com');
-  // });
+  test('Pressing view route takes you to journey page', () => {
+    const mockNavigate = jest.fn();
+    const { getByText, getByTestId } = render(
+      <Event eventData={{}} navigate={mockNavigate} />
+    );
+    fireEvent.press(getByTestId('eventButton'));
+    fireEvent.press(getByText('View Route'));
+    expect(mockNavigate).toHaveBeenCalledWith('/journey');
+  });
+
+  test('Buy tickets button is not rendered after event pressed twice', () => {
+    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'));
+    fireEvent.press(getByTestId('eventButton'));
+    expect(() => {
+      getByText('Buy Tickets');
+    }).toThrow(new Error('Unable to find an element with text: Buy Tickets'));
+  });
+
+  test('View Route button is not rendered after event pressed twice', () => {
+    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'));
+    fireEvent.press(getByTestId('eventButton'));
+    expect(() => {
+      getByText('View Route');
+    }).toThrow(new Error('Unable to find an element with text: View Route'));
+  });
 });
