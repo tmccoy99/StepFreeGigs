@@ -6,6 +6,6 @@ describe('Journey Screen component testing', () => {
     const renderedComponent = render(
       <JourneyScreen />
     );
-    expect(getByText('Directions')).toBeDefined();
+    expect(renderedComponent.getByText('Directions')).toBeDefined();
   });
 })
