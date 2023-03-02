@@ -1,5 +1,5 @@
 const axios = require('axios');
-const dotenv = require('dotenv');
+
 const ticketMasterAPIKey = require('../ticketMasterAPIKey');
 
 class TicketmasterClient {
@@ -31,6 +31,8 @@ class TicketmasterClient {
         venue: event._embedded.venues[0].name,
         venueAddress: event._embedded.venues[0].address.line1,
         venuePostcode: event._embedded.venues[0].postalCode,
+        image: event.images[0].url,
+        distance: `${event.distance} miles`,
       };
     });
     return events;
