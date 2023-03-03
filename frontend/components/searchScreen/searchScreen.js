@@ -14,15 +14,10 @@ export default function SearchScreen() {
   return (
     <View>
       <Button onPress={onPress} title='Find events near me!' />
-      <>
-        {events &&
-          events.map((data, index) => (
-            <>
-              <Event eventData={data} key={index} testID='Event' />
-              <p testID='Event'>Hi</p>
-            </>
-          ))}
-      </>
+      {events &&
+        events.map((data, index) => (
+          <Event eventData={data} key={index} testID='Event' />
+        ))}
       {!events && (
         <>
           <Text>StepFreeGigs</Text>

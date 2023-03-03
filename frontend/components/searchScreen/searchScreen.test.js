@@ -26,22 +26,21 @@ describe('SearchScreen component testing', () => {
   it('Pressing events near me button removes the name and image', async () => {
     const { queryByText, queryByTestId } = render(<SearchScreen />);
     axios.get.mockResolvedValueOnce(fakeEvents);
-    act(() => {
+    await waitFor(() => {
       fireEvent.press(queryByText('Find events near me!'));
     });
     expect(queryByText('StepFreeGigs')).toBeNull();
     expect(queryByTestId('logo')).toBeNull();
   });
 
-  it.only('Pressing events near me button renders five event components', async () => {
-    const { queryAllByTestId, queryByText, queryAllByText, getByText } = render(
-      <SearchScreen />
-    );
-    axios.get.mockResolvedValueOnce(fakeEvents);
+  it('Pressing events near me button renders five event components', async () => {
+    const { queryByText } = render(<SearchScreen />);
+    axios.get.mockImplementation(() => Promise.resolve(fakeEvents));
     await waitFor(() => {
       fireEvent.press(queryByText('Find events near me!'));
     });
-    expect(queryByText('Hi')).not.toBeNull();
-    // expect(queryAllByTestId('Event').length).toBe(5);
+    for (i = 1; i <= 5; i++) {
+      expect(queryByText(`Event ${i}`)).not.toBeNull();
+    }
   });
 });
