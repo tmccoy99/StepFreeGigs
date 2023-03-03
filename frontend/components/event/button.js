@@ -10,3 +10,14 @@ export default function FlatButton({ text, onPress }) {
     </TouchableOpacity>
   )
 }
+
+const styles = StyleSheet.create({
+  button: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#333',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});

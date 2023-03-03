@@ -26,18 +26,16 @@ export default function Event({ eventData, navigate }, testID="Event") {
         <Text>{venue}</Text>
         {isExpanded && (
           <>
-            <Button
-              title='Buy Tickets'
-              onPress={() => {
-                navigate(url);
-              }}
+            <FlatButton
+              text='Buy Tickets'
+              onPress={
+                navigate(url)}
               style={styles.button}
             />
-            <Button
-              title='View Route'
-              onPress={() => {
-                navigate('/journey');
-              }}
+            <FlatButton
+              text='View Route'
+              onPress={
+                navigate(url)}
               style={styles.button}
             />{' '}
           </>
