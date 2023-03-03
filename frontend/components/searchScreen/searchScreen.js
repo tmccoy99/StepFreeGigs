@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import { Button, Text, View, Image } from 'react-native';
-// import Geolocation from '@react-native-community/geolocation';
-const baseURL = process.env.NATIVE_APP_API_URL
-
+import axios from 'axios';
+const baseURL = 'http://localhost:3000';
 
 export default function SearchScreen() {
-
   onPress = () => {
-    fetch(`${baseURL}/events`)
-  }
+    axios.get(`${baseURL}/events`);
+    setEventsDisplayed(!eventsDisplayed);
+  };
 
+  const [eventsDisplayed, setEventsDisplayed] = useState(false);
   return (
     <>
-      <Button onPress={onPress} title="Find events near me!" />
-      <Image testID="logo" source={require('../../assets/stepfreegigs-logo.png')}></Image>
-      <Text>StepFreeGigs</Text>
+      <Button onPress={onPress} title='Find events near me!' />
+      {!eventsDisplayed && (
+        <>
+          <Text>StepFreeGigs</Text>
+          <Image
+            testID='logo'
+            source={require('../../assets/stepfreegigs-logo.png')}
+          ></Image>
+        </>
+      )}
     </>
   );
 }
