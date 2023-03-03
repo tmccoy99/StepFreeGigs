@@ -12,7 +12,7 @@ export default function SearchScreen() {
   };
 
   return (
-    <View>
+    <View testID='SearchScreen'>
       <Button onPress={onPress} title='Find events near me!' />
       {events &&
         events.map((data, index) => (
