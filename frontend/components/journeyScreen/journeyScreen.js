@@ -7,7 +7,7 @@ export default function JourneyScreen({
   startLocation,
   endLocation,
 }) {
-  const [directions, setDirections] = useState();
+  const [directions, setDirections] = useState('default');
 
   useEffect(() => {
     const getDirections = async (startLocation, endLocation) => {
@@ -17,8 +17,8 @@ export default function JourneyScreen({
       console.log(directions);
     };
 
-    startLocation && 
-    endLocation || 
+    (startLocation && 
+    endLocation) || 
     getDirections(startLocation, endLocation)
 
   }, [startLocation, endLocation]);
