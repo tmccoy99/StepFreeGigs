@@ -1,5 +1,6 @@
 import React, { useRef, useState} from 'react';
 import { Button, Animated, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Emoticons from 'react-native-emoticons';
 import FlatButton from './button';
 
 export default function Event({ eventData, navigate }, testID="Event") {
@@ -21,22 +22,20 @@ export default function Event({ eventData, navigate }, testID="Event") {
     <Animated.View style={[styles.expandableContent, { transform: [{ translateY: translation }] }]}>
       <TouchableOpacity style={styles.container} onPress={onPress} testID='eventButton'>
         <Text style={styles.evName}>{eventName}</Text>
-        <Text>{priceRanges}</Text>
-        <Text>{distance}</Text>
-        <Text>{venue}</Text>
+        <Text style={styles.price}>{priceRanges}</Text>
+        <Text style={styles.miles}>{distance}</Text>
+        <Text style={styles.venue}>{venue}</Text>
         {isExpanded && (
           <>
             <FlatButton
               text='Buy Tickets'
               onPress={
                 navigate(url)}
-              style={styles.button}
             />
             <FlatButton
               text='View Route'
               onPress={
                 navigate(url)}
-              style={styles.button}
             />{' '}
           </>
         )}
@@ -71,5 +70,25 @@ const styles = StyleSheet.create({
   expandableContent: {
     overflow: 'hidden',
   },
+  price: {
+    fontFamily: 'crimson-numeric',
+    fontSize: 15,
+    fontWeight: 'lighter',
+    marginBottom: 10,
+  },
+  venue: {
+    fontFamily: 'georgia',
+    fontSize: 15,
+    fontWeight: 'lighter',
+    marginBottom: 10,
+  },
+  miles: {
+    venue: {
+      fontFamily: 'italic',
+      fontSize: 15,
+      fontWeight: 'lighter',
+      marginBottom: 10,
+    }
+  }
 });
 
