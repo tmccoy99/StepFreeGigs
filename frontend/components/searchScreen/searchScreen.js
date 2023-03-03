@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Text, View, Image } from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';
+import logo from '../../assets/stepfreegigs-logo.png';
 const baseURL = 'http://localhost:3000';
 
 export default function SearchScreen() {
@@ -13,7 +14,11 @@ export default function SearchScreen() {
 
   return (
     <View testID='SearchScreen'>
-      <Button onPress={onPress} title='Find events near me!' />
+      <Button
+        onPress={onPress}
+        title='Find events near me!'
+        testID='search-button'
+      />
       {events &&
         events.map((data, index) => (
           <Event eventData={data} key={index} testID='Event' />
@@ -21,10 +26,7 @@ export default function SearchScreen() {
       {!events && (
         <>
           <Text>StepFreeGigs</Text>
-          <Image
-            testID='logo'
-            source={require('../../assets/stepfreegigs-logo.png')}
-          ></Image>
+          <Image testID='logo' source={logo} />
         </>
       )}
     </View>
