@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import { Button, Text, View, Image } from 'react-native';
 import axios from 'axios';
+import Event from '../event/event';
 const baseURL = 'http://localhost:3000';
 
 export default function SearchScreen() {
-  onPress = () => {
-    axios.get(`${baseURL}/events`);
-    setEventsDisplayed(!eventsDisplayed);
+  const [events, setEvents] = useState(null);
+  const onPress = async () => {
+    const eventsData = await axios.get(`${baseURL}/events`);
+    setEvents(eventsData);
   };
 
-  const [eventsDisplayed, setEventsDisplayed] = useState(false);
   return (
-    <>
+    <View>
       <Button onPress={onPress} title='Find events near me!' />
-      {!eventsDisplayed && (
+      <>
+        {events &&
+          events.map((data, index) => (
+            <>
+              <Event eventData={data} key={index} testID='Event' />
+              <p testID='Event'>Hi</p>
+            </>
+          ))}
+      </>
+      {!events && (
         <>
           <Text>StepFreeGigs</Text>
           <Image
@@ -22,6 +32,6 @@ export default function SearchScreen() {
           ></Image>
         </>
       )}
-    </>
+    </View>
   );
 }
