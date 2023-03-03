@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import { Button, Text, View, Image } from 'react-native';
-// import Geolocation from '@react-native-community/geolocation';
+import Event from '../event/event'
+//import Geolocation from '@react-native-community/geolocation';
+
+//Geolocation.setRNConfiguration(config);
+
 const baseURL = process.env.NATIVE_APP_API_URL
 
 
 export default function SearchScreen() {
 
+  //Geolocation.getCurrentPosition((info) => console.log(info));
+
+
   onPress = () => {
     fetch(`${baseURL}/events`)
+      .then(response => response.json())
+      .then(eventsData => eventsData.map(data => <Event eventData={data} />))
+      .catch(error => console.error(error));
   }
 
   return (

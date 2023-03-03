@@ -1,6 +1,7 @@
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import SearchScreen from './searchScreen';
 import { enableFetchMocks } from 'jest-fetch-mock'
+import { fakeEvents } from '../../fixfeatures/fakeEvent'
 enableFetchMocks()
 const baseURL = process.env.NATIVE_APP_API_URL
 
@@ -27,9 +28,18 @@ describe('SearchScreen component testing', () => {
     expect(eventsButton).toBeDefined()
   })
 
-  it('Pressing events button should make a GET request to the /events', () => {
+  it.only('Pressing events button should make a GET request to the /events', async () => {
     const { getByText } = render(<SearchScreen/>)
+    fetch.mockResolvedValueOnce(JSON.stringify([{venue: 'the pits'}]))
     fireEvent.press(getByText('Find events near me!'))
-    expect(fetch.mock.calls[0][0]).toBe(`${baseURL}/events`)
+    await waitFor(() => { expect(fetch.mock.calls[0][0]).toBe(`${baseURL}/events`)})
+  })
+
+  it('Once events are returned, 5 Event components with correct information are rendered', () => {
+    const searchScreen = render(<SearchScreen/>)
+    fetch.mockResolvedValueOnce(fakeEvents)
+    fireEvent.press(searchScreen.getByText('Find events near me!'))
+    const eventComponents = searchScreen.getAllByTestId('Event')
+    expect(eventComponents.length).toBe(5)
   })
 });
