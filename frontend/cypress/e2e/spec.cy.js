@@ -1,12 +1,12 @@
 describe('template spec', () => {
   it('displays a search screen on loading', () => {
     cy.visit('http://localhost:19006/');
-    cy.get('[data-testID="SearchScreen"').should('exist');
+    cy.get('[data-testID="SearchScreen"]').should('exist');
   });
 
   it('displays a button to find events', () => {
     cy.visit('http://localhost:19006/');
-    cy.get('[data-testID="search-button"').should('exist');
+    cy.get('[data-testID="search-button"]').should('exist');
   });
 
   it('sends a request to the back-end on button press', () => {
@@ -20,7 +20,7 @@ describe('template spec', () => {
         req.reply({ statusCode: 200, accessibleEvents: [] });
       }
     ).as('event-query');
-    cy.get('[data-testID="search-button"').click();
+    cy.get('[data-testID="search-button"]').click();
     cy.wait('@event-query');
   });
 });
