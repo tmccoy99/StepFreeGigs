@@ -270,3 +270,5 @@ const mockLegs = [
     scheduledArrivalTime: '2023-03-04T14:38:00',
   },
 ];
+
+module.exports = mockLegs;

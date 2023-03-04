@@ -1,24 +1,24 @@
 import { render } from '@testing-library/react-native';
 import RouteMap from './map';
 
-const legs = [
-  {
-    departurePoint: { lat: 51.503364, lon: -0.127625, commonName: 'London' },
-    arrivalPoint: { lat: 48.856614, lon: 2.3522219, commonName: 'Paris' },
-    path: { lineString: '[[51.503364,-0.127625],[48.856614,2.3522219]]' },
-  },
-];
+const mockLegs = require('../../fixtures/mockJourneyLegs');
 
 describe('RouteMap', () => {
   it('renders a MapView component', () => {
-    const { queryByTestId } = render(<RouteMap legs={legs} />);
+    const { queryByTestId } = render(<RouteMap legs={mockLegs} />);
     const mapView = queryByTestId('map-view');
     expect(mapView).not.toBeNull();
   });
 
   it('renders Markers for each leg', () => {
-    const { getAllByTestId } = render(<RouteMap legs={legs} />);
+    const { getAllByTestId } = render(<RouteMap legs={mockLegs} />);
     const markers = getAllByTestId('marker');
-    expect(markers).toHaveLength(legs.length);
+    expect(markers).toHaveLength(mockLegs.length);
+  });
+
+  it('renders Polylines for each leg', () => {
+    const { getAllByTestId } = render(<RouteMap legs={mockLegs} />);
+    const polylines = getAllByTestId('polyline');
+    expect(polylines).toHaveLength(mockLegs.length);
   });
 });
