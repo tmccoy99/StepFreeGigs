@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 export default RouteMap = ({ legs }) => {
   const region = {
@@ -10,9 +10,23 @@ export default RouteMap = ({ legs }) => {
     longitudeDelta: 0.01,
   };
 
+  const markers = legs.map((leg, index) => (
+    <Marker
+      key={index}
+      coordinate={{
+        latitude: leg.arrivalPoint.lat,
+        longitude: leg.arrivalPoint.lon,
+      }}
+      title={leg.arrivalPoint.commonName}
+      testID='marker'
+    />
+  ));
+
   return (
     <View>
-      <MapView region={region} testID='map-view' />
+      <MapView region={region} testID='map-view'>
+        {markers}
+      </MapView>
     </View>
   );
 };

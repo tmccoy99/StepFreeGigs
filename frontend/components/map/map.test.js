@@ -15,4 +15,10 @@ describe('RouteMap', () => {
     const mapView = queryByTestId('map-view');
     expect(mapView).not.toBeNull();
   });
+
+  it('renders Markers for each leg', () => {
+    const { getAllByTestId } = render(<RouteMap legs={legs} />);
+    const markers = getAllByTestId('marker');
+    expect(markers).toHaveLength(legs.length);
+  });
 });
