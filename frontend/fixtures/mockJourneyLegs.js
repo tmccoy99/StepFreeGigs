@@ -271,4 +271,4 @@ const mockLegs = [
   },
 ];
 
-module.exports = mockLegs;
+export default mockLegs;

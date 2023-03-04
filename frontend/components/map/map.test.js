@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react-native';
 import RouteMap from './map';
-
-const mockLegs = require('../../fixtures/mockJourneyLegs');
+import mockLegs from '../../fixtures/mockJourneyLegs';
 
 describe('RouteMap', () => {
   it('renders a MapView component', () => {
