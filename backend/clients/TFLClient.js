@@ -13,8 +13,8 @@ class TFLCLient {
     );
 
     const directions = {
-      journeys: response.journeys,
-      lines: response.lines,
+      journeys: response.data.journeys,
+      lines: response.data.lines,
     };
 
     return directions;
@@ -26,7 +26,7 @@ class TFLCLient {
 
 // const client = new TFLCLient();
 // client
-//   .getDirections('SW99QH', 'SW99SL')
-//   .then((response) => console.log(response));
+//   .getDirections('SW3 3QF', 'SW99SL')
+//   .then((response) => console.log(response.journeys[0].legs));
 
 module.exports = TFLCLient;

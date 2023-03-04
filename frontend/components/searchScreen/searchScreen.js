@@ -8,8 +8,10 @@ const baseURL = 'http://localhost:3000';
 export default function SearchScreen() {
   const [events, setEvents] = useState(null);
   const onPress = async () => {
-    const eventsData = await axios.get(`${baseURL}/events`);
-    setEvents(eventsData);
+    const eventsData = await axios.get(`http://localhost:3000/events`, {
+      params: { latlong: '51.4919120,-0.1692555', radius: '5' },
+    });
+    setEvents(eventsData.accessibleEvents);
   };
 
   return (

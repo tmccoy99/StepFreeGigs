@@ -35,7 +35,7 @@ describe('SearchScreen component testing', () => {
 
   it('Pressing events near me button renders five event components', async () => {
     const { queryByText } = render(<SearchScreen />);
-    axios.get.mockImplementation(() => Promise.resolve(fakeEvents));
+    axios.get.mockResolvedValueOnce(fakeEvents);
     await waitFor(() => {
       fireEvent.press(queryByText('Find events near me!'));
     });
