@@ -7,31 +7,22 @@ export default function JourneyScreen({
   startLocation,
   endLocation,
 }) {
-  const [directions, setDirections] = useState('default');
-
+  const [directions, setDirections] = useState(null);
   useEffect(() => {
-    const getDirections = async (startLocation, endLocation) => {
+    const getDirections = async () => {
       const result = await axios.get('localhost:3000/');
       setDirections(result);
-      console.log(result)
-      console.log(directions);
     };
-
-    (startLocation && 
-    endLocation) || 
-    getDirections(startLocation, endLocation)
-
-  }, [startLocation, endLocation]);
+    if (!directions) getDirections();
+  }, []);
 
   return (
     <>
-      {/* <Text>Directions</Text>
-      { directions || 
-
-       directions.journeys.map(journey => {
-         journey.legs.map((leg) => {
-          })}
-       )} */}
+      <Text>Directions</Text>
+      {directions &&
+        directions.journeys.map((journey, index) => (
+          <Text key={index}>Leg</Text>
+        ))}
     </>
   );
 }
