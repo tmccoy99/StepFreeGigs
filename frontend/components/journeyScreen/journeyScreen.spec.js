@@ -17,8 +17,7 @@ describe('Journey Screen component testing', () => {
       renderedComponent = render(
         <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
       );
-      Promise.resolve();
     });
-    expect(renderedComponent.queryByText('leg')).not.toBeNull();
+    expect(renderedComponent.queryAllByText('Leg')).not.toEqual([]);
   });
 });
