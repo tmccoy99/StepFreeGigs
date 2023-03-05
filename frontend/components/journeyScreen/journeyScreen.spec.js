@@ -10,6 +10,11 @@ describe('Journey Screen component testing', () => {
     expect(renderedComponent.queryByText('Steps')).not.toBeNull();
   });
 
+  test('displays Map button', () => {
+    const renderedComponent = render(<JourneyScreen />);
+    expect(renderedComponent.queryByText('Map')).not.toBeNull();
+  });
+
   test('renders journey components once data fetched ', async () => {
     mockAxios.get.mockResolvedValueOnce(mockTFLResponse);
     let renderedComponent;
