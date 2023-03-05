@@ -10,7 +10,7 @@ export default function JourneyScreen({
   const [directions, setDirections] = useState(null);
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('localhost:3000/');
+      const result = await axios.get('http://localhost:3000/');
       setDirections(result);
     };
     if (!directions) getDirections();
@@ -18,10 +18,10 @@ export default function JourneyScreen({
 
   return (
     <>
-      <Text>Directions</Text>
+      <Button title='Steps'></Button>
       {directions &&
         directions.journeys.map((journey, index) => (
-          <Text key={index}>Leg</Text>
+          <Text testID='Journey' key={`Journey-${index}`}></Text>
         ))}
     </>
   );

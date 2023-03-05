@@ -5,12 +5,12 @@ import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
 jest.mock('axios');
 
 describe('Journey Screen component testing', () => {
-  // test('it displays the title', () => {
-  //   const renderedComponent = render(<JourneyScreen />);
-  //   expect(renderedComponent.getByText('Directions')).toBeDefined();
-  // });
+  test('displays Steps button', () => {
+    const renderedComponent = render(<JourneyScreen />);
+    expect(renderedComponent.queryByText('Steps')).not.toBeNull();
+  });
 
-  test('it renders a leg', async () => {
+  test('renders journey components once data fetched ', async () => {
     mockAxios.get.mockResolvedValueOnce(mockTFLResponse);
     let renderedComponent;
     await waitFor(() => {
@@ -18,6 +18,6 @@ describe('Journey Screen component testing', () => {
         <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
       );
     });
-    expect(renderedComponent.queryAllByText('Leg')).not.toEqual([]);
+    expect(renderedComponent.queryAllByTestId('Journey').length).toBe(2);
   });
 });
