@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import JourneyScreen from './journeyScreen';
 import mockAxios from 'jest-mock-axios';
 import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
@@ -13,6 +13,17 @@ describe('Journey Screen component testing', () => {
   test('displays Map button', () => {
     const renderedComponent = render(<JourneyScreen />);
     expect(renderedComponent.queryByText('Map')).not.toBeNull();
+  });
+
+  test('Map component not displayed before Map button pressed', () => {
+    const renderedComponent = render(<JourneyScreen />);
+    expect(renderedComponent.queryByTestId('Map')).toBeNull();
+  });
+
+  test('Map component displayed after Map button pressed', () => {
+    const renderedComponent = render(<JourneyScreen />);
+    fireEvent.press(renderedComponent.getByText('Map'));
+    expect(renderedComponent.queryByTestId('Map')).not.toBeNull();
   });
 
   test('renders journey components once data fetched ', async () => {
