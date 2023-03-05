@@ -51,7 +51,7 @@ describe('JourneyScreen component testing', () => {
     });
   });
 
-  describe('Journey component display', () => {
+  describe('Step component display', () => {
     test('renders step components initially', async () => {
       await waitFor(() => {
         renderedComponent = render(
@@ -59,6 +59,16 @@ describe('JourneyScreen component testing', () => {
         );
       });
       expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
+    });
+
+    test('does not render step components after map button pressed', async () => {
+      await waitFor(() => {
+        renderedComponent = render(
+          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
+        );
+      });
+      fireEvent.press(renderedComponent.getByText('Map'));
+      expect(renderedComponent.queryByTestId('Step')).toBeNull();
     });
   });
 });
