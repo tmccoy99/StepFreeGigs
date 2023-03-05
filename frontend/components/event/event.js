@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Button } from '@rneui/themed';
 import Collapsible from 'react-native-collapsible';
 
 export default function Event({ eventData, navigate }) {
@@ -27,17 +28,19 @@ export default function Event({ eventData, navigate }) {
         <Collapsible collapsed={!isExpanded}>
           <View style={styles.eventFooter}>
             <Button
-              title='Buy Tickets'
-              onPress={() => {
-                navigate(url);
-              }}
-            />
+              onPress={() => navigate(url)}
+              size='sm'
+              color='#FFA458'
+            >
+              Buy Tickets
+            </Button>
             <Button
-              title='View Route'
-              onPress={() => {
-                navigate('/journey');
-              }}
-            />
+              onPress={() => navigate('/journey')}
+              size='sm'
+              color='#FFA458'
+            >
+              View Route
+            </Button>
           </View>
         </Collapsible>
       </TouchableOpacity>
@@ -49,10 +52,10 @@ const styles = StyleSheet.create({
   eventContainer: {
     backgroundColor: '#D3D3D3',
     padding: 15,
+    paddingBottom: 10,
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 6
-    // borderRadius: 20,
   },
   eventHeader: {
     minHeight: 50,
@@ -85,7 +88,9 @@ const styles = StyleSheet.create({
   eventFooter: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: -8
-  },
+    marginTop: 10,
+    minHeight: 30
+  }
 })
