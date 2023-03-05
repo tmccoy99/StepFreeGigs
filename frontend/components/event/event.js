@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
     padding: 15,
     marginLeft: 20,
     marginRight: 20,
-    borderRadius: 20,
+    marginBottom: 6
+    // borderRadius: 20,
   },
   eventHeader: {
     minHeight: 50,
