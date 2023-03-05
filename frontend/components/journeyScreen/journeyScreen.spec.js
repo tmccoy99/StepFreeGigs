@@ -46,7 +46,7 @@ describe('JourneyScreen component testing', () => {
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
         );
       });
-      fireEvent.press(renderedComponent.getByText('Map'));
+      fireEvent.press(renderedComponent.getByTestId('Map button'));
       expect(renderedComponent.queryByTestId('Map')).not.toBeNull();
     });
   });
@@ -67,7 +67,7 @@ describe('JourneyScreen component testing', () => {
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
         );
       });
-      fireEvent.press(renderedComponent.getByText('Map'));
+      fireEvent.press(renderedComponent.getByTestId('Map button'));
       expect(renderedComponent.queryByTestId('Step')).toBeNull();
     });
 
@@ -77,8 +77,8 @@ describe('JourneyScreen component testing', () => {
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
         );
       });
-      fireEvent.press(renderedComponent.getByText('Map'));
-      fireEvent.press(renderedComponent.getByText('Steps'));
+      fireEvent.press(renderedComponent.getByTestId('Map button'));
+      fireEvent.press(renderedComponent.getByTestId('Steps button'));
       expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
     });
   });

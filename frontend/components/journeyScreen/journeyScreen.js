@@ -27,8 +27,12 @@ export default function JourneyScreen({
   return (
     <>
       <View>
-        <Button title='Steps' onPress={viewSteps}></Button>
-        <Button title='Map' onPress={viewMap}></Button>
+        <Button
+          title='Steps'
+          onPress={viewSteps}
+          testID='Steps button'
+        ></Button>
+        <Button title='Map' onPress={viewMap} testID='Map button'></Button>
       </View>
       <View>
         {displayType === 'Steps' ? (
