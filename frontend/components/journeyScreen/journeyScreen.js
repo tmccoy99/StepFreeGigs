@@ -12,6 +12,9 @@ export default function JourneyScreen({
   const viewMap = () => {
     setDisplayType('Map');
   };
+  const viewSteps = () => {
+    setDisplayType('Steps');
+  };
 
   useEffect(() => {
     const getDirections = async () => {
@@ -24,7 +27,7 @@ export default function JourneyScreen({
   return (
     <>
       <View>
-        <Button title='Steps'></Button>
+        <Button title='Steps' onPress={viewSteps}></Button>
         <Button title='Map' onPress={viewMap}></Button>
       </View>
       <View>

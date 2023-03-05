@@ -70,5 +70,16 @@ describe('JourneyScreen component testing', () => {
       fireEvent.press(renderedComponent.getByText('Map'));
       expect(renderedComponent.queryByTestId('Step')).toBeNull();
     });
+
+    test('step components reappear once step button is pressed', async () => {
+      await waitFor(() => {
+        renderedComponent = render(
+          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
+        );
+      });
+      fireEvent.press(renderedComponent.getByText('Map'));
+      fireEvent.press(renderedComponent.getByText('Steps'));
+      expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
+    });
   });
 });
