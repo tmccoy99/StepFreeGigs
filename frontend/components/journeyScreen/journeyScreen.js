@@ -30,8 +30,8 @@ export default function JourneyScreen({
       <View>
         {displayType === 'Steps' ? (
           directions &&
-          directions.journeys.map((journey, index) => (
-            <Text testID='Journey' key={`Journey-${index}`}></Text>
+          directions.journeys.map((steps, index) => (
+            <Text testID='Step' key={`Journey-${index}`}></Text>
           ))
         ) : (
           <Text testID='Map' />
