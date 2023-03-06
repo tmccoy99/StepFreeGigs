@@ -1,6 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import SearchScreen from './components/searchScreen/searchScreen';
+// import JourneyScreen from './components/journeyScreen/journeyScreen
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
@@ -8,8 +8,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='Search'>
         <Stack.Screen name='Search' component={SearchScreen}></Stack.Screen>
+        {/* <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
