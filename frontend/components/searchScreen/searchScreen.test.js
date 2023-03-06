@@ -2,6 +2,7 @@ import { render, fireEvent, act, waitFor } from '@testing-library/react-native';
 import SearchScreen from './searchScreen';
 import axios from 'axios';
 import fakeEvents from '../../fixtures/mockEvents';
+
 jest.mock('axios');
 const baseURL = process.env.NATIVE_APP_API_URL;
 describe('SearchScreen component testing', () => {

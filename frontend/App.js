@@ -1,12 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import SearchScreen from './components/searchScreen/searchScreen';
 import Geolocation from '@react-native-community/geolocation';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-const LocationContext = React.createContext('');
+export const LocationContext = createContext(null);
 
 export default function App() {
   const [currentLocation, setCurrentLocation] = useState({
@@ -14,6 +13,7 @@ export default function App() {
     latitude: 51.537187,
     longitude: 0.050094,
   });
+  console.log(currentLocation);
   useEffect(() => {
     const getLocation = () => {
       Geolocation.getCurrentPosition((info) => {
@@ -25,9 +25,9 @@ export default function App() {
     };
     getLocation();
   }, []);
-  const LocationContext = React.createContext(null);
+
   return (
-    <LocationContext.Provider currentLocation={currentLocation}>
+    <LocationContext.Provider value={currentLocation}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name='Search' component={SearchScreen}></Stack.Screen>
