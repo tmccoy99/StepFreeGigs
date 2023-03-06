@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Text, View, Image } from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';

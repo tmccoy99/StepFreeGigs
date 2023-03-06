@@ -1,13 +1,16 @@
+
 import { StyleSheet } from 'react-native';
+
 import SearchScreen from './components/searchScreen/searchScreen';
 // import JourneyScreen from './components/journeyScreen/journeyScreen
 import Geolocation from '@react-native-community/geolocation';
+
 import React, { useState, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-const LocationContext = React.createContext('');
+
 
 export default function App() {
   const [currentLocation, setCurrentLocation] = useState({
@@ -15,6 +18,7 @@ export default function App() {
     latitude: 51.537187,
     longitude: 0.050094,
   });
+  console.log(currentLocation);
   useEffect(() => {
     const getLocation = () => {
       Geolocation.getCurrentPosition((info) => {
@@ -26,16 +30,19 @@ export default function App() {
     };
     getLocation();
   }, []);
-  const LocationContext = React.createContext(null);
+
   return (
     <NavigationContainer>
+
+
       <Stack.Navigator initialRouteName='Search'>
         <Stack.Screen
           name='Search'
           currentLocation={currentLocation}
-          component={SearchScreen}
-        ></Stack.Screen>
+   
+        > {() => <SearchScreen currentLocation={currentLocation} />}</Stack.Screen>
         {/* <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen> */}
+
       </Stack.Navigator>
     </NavigationContainer>
   );
