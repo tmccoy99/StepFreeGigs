@@ -25,12 +25,13 @@ export default function Event({ eventData, navigate }) {
             <Text style={styles.eventDistance}>{distance}</Text>
           </View>
         </View>
-        <Collapsible collapsed={!isExpanded}>
+        <Collapsible collapsed={!isExpanded} testID='collapsible'>
           <View style={styles.eventFooter}>
             <Button
               onPress={() => navigate(url)}
               size='sm'
               color='#FFA458'
+              testID='ticketButton'
             >
               Buy Tickets
             </Button>
@@ -38,6 +39,7 @@ export default function Event({ eventData, navigate }) {
               onPress={() => navigate('/journey')}
               size='sm'
               color='#FFA458'
+              testID='journeyButton'
             >
               View Route
             </Button>

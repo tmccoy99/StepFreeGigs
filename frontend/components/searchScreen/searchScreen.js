@@ -11,19 +11,6 @@ export default function SearchScreen() {
     const eventsData = await axios.get(`${baseURL}/events`);
     setEvents(eventsData);
   };
-  
-  const testData = {
-    id: '1',
-    image: 'www.imageurl.com',
-    eventName: 'Event 1',
-    url: 'https://www.ticketmaster.com/event1',
-    date: '2023-03-01T19:00:00Z',
-    distance: '1.5 miles',
-    priceRanges: '£10 - £40',
-    venue: 'Venue 1',
-    venueAddress: '123 Main St',
-    venuePostcode: '12345',
-  }
 
   return (
     <View testID='SearchScreen'>
@@ -32,8 +19,6 @@ export default function SearchScreen() {
         title='Find events near me!'
         testID='search-button'
       />
-
-      <Event eventData={testData} />
 
       {events &&
         events.map((data, index) => (
