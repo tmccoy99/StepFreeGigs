@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import RouteMap from '../map/map';
 import axios from 'axios';
 
@@ -45,7 +52,7 @@ export default function JourneyScreen({
           ))
         ) : (
           <View>
-            <Text testID='Map'></Text>
+            <Text testID='Map'>Route map:</Text>
             <RouteMap testID='Map' legs={directions.journeys[0].legs} />
           </View>
         )}
