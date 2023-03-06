@@ -1,16 +1,14 @@
-
 import { StyleSheet } from 'react-native';
 
 import SearchScreen from './components/searchScreen/searchScreen';
 // import JourneyScreen from './components/journeyScreen/journeyScreen
-import Geolocation from '@react-native-community/geolocation';
+import * as Location from 'expo-location';
 
 import React, { useState, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-
 
 export default function App() {
   const [currentLocation, setCurrentLocation] = useState({
@@ -20,29 +18,34 @@ export default function App() {
   });
   console.log(currentLocation);
   useEffect(() => {
-    const getLocation = () => {
-      Geolocation.getCurrentPosition((info) => {
+    const getLocation = async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Permission to access location was denied');
+          return;
+        }
+        const location = await Location.getCurrentPositionAsync({});
         setCurrentLocation({
-          latitude: info.coords.latitude,
-          longitude: info.coords.longitude,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
         });
-      });
+      } catch (error) {
+        console.log('Error getting location', error);
+      }
     };
     getLocation();
   }, []);
 
   return (
     <NavigationContainer>
-
-
       <Stack.Navigator initialRouteName='Search'>
         <Stack.Screen
           name='Search'
-          currentLocation={currentLocation}
-   
-        > {() => <SearchScreen currentLocation={currentLocation} />}</Stack.Screen>
+          component={SearchScreen}
+          initialParams={{ currentLocation }}
+        />
         {/* <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen> */}
-
       </Stack.Navigator>
     </NavigationContainer>
   );

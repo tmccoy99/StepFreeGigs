@@ -5,16 +5,22 @@ import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
 const baseURL = 'http://localhost:3000';
 
-export default function SearchScreen({ navigation, currentLocation }) {
+export default function SearchScreen({ navigation, route }) {
+  const { currentLocation } = route.params;
   const [events, setEvents] = useState(null);
   const onPress = async () => {
-    const eventsData = await axios.get(`http://localhost:3000/events`, {
-      params: {
-        latlong: `${currentLocation.latitude},${currentLocation.longitude}`,
-        radius: '5',
-      },
-    });
-    setEvents(eventsData.accessibleEvents);
+    try {
+      console.log(currentLocation);
+      const eventsData = await axios.get(`http://localhost:3000/events`, {
+        params: {
+          latlong: `${currentLocation?.latitude},${currentLocation?.longitude}`,
+          radius: '5',
+        },
+      });
+      setEvents(eventsData.accessibleEvents);
+    } catch (error) {
+      console.log('Error retrieving events:', error);
+    }
   };
 
   return (
