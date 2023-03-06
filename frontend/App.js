@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import SearchScreen from './components/searchScreen/searchScreen';
 // import JourneyScreen from './components/journeyScreen/journeyScreen
 import Geolocation from '@react-native-community/geolocation';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
