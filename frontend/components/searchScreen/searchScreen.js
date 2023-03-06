@@ -5,7 +5,7 @@ import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
 const baseURL = 'http://localhost:3000';
 
-export default function SearchScreen({ currentLocation }) {
+export default function SearchScreen({ navigation, currentLocation }) {
   const [events, setEvents] = useState(null);
   const onPress = async () => {
     const eventsData = await axios.get(`http://localhost:3000/events`, {
@@ -26,7 +26,12 @@ export default function SearchScreen({ currentLocation }) {
       />
       {events &&
         events.map((data, index) => (
-          <Event eventData={data} key={index} testID='Event' />
+          <Event
+            eventData={data}
+            key={index}
+            navigation={navigation}
+            testID='Event'
+          />
         ))}
       {!events && (
         <>

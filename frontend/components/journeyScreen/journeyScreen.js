@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
+import RouteMap from '../map/map';
 import axios from 'axios';
 
 export default function JourneyScreen({
@@ -18,8 +26,10 @@ export default function JourneyScreen({
 
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('http://localhost:3000/');
-      setDirections(result);
+      const result = await axios.get('http://localhost:3000/journey', {
+        params: { start: startLocation, destination: endLocation },
+      });
+      setDirections(result.data);
     };
     if (!directions) getDirections();
   }, []);
@@ -41,7 +51,10 @@ export default function JourneyScreen({
             <Text testID='Step' key={`Journey-${index}`}></Text>
           ))
         ) : (
-          <Text testID='Map' />
+          <View>
+            <Text testID='Map'>Route map:</Text>
+            <RouteMap testID='Map' legs={directions.journeys[0].legs} />
+          </View>
         )}
       </View>
     </>
