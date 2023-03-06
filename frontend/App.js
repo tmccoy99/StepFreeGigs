@@ -28,14 +28,16 @@ export default function App() {
   }, []);
   const LocationContext = React.createContext(null);
   return (
-
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Search'>
-        <Stack.Screen name='Search' component={SearchScreen}></Stack.Screen>
+        <Stack.Screen
+          name='Search'
+          currentLocation={currentLocation}
+          component={SearchScreen}
+        ></Stack.Screen>
         {/* <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 }
 
