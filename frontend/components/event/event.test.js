@@ -41,10 +41,12 @@ describe('Event component testing', () => {
   // });
 
   test('Buy tickets button is not rendered unless event pressed', () => {
-    const { getByText } = render(<Event eventData={{}} />);
+    const { getByTestId } = render(<Event eventData={{}} />);
     expect(() => {
-      getByText('Buy Tickets');
-    }).toThrow(new Error('Unable to find an element with text: Buy Tickets'));
+      getByTestId('Buy Tickets button');
+    }).toThrow(
+      new Error('Unable to find an element with testID: Buy Tickets button')
+    );
   });
 
   test('View Route button is not rendered unless event pressed', () => {
@@ -55,10 +57,10 @@ describe('Event component testing', () => {
   });
 
   test('Buy tickets button is rendered after event is pressed', () => {
-    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    const { getByTestId } = render(<Event eventData={{}} />);
     fireEvent.press(getByTestId('eventButton'));
-    const getTicketsButton = getByText('Buy Tickets');
-    expect(getTicketsButton).toBeDefined();
+    const getTicketsButton = getByTestId('Buy Tickets button');
+    expect(getTicketsButton).not.toBeNull();
   });
 
   test('View Route button is rendered after event is pressed', () => {
@@ -67,16 +69,6 @@ describe('Event component testing', () => {
     const getTicketsButton = getByText('View Route');
     expect(getTicketsButton).toBeDefined();
   });
-
-  // test('Pressing buy tickets takes you to given url', () => {
-  //   const mockNavigation = {navigate: jest.fn()};
-  //   const { getByText, getByTestId } = render(
-  //     <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
-  //   );
-  //   fireEvent.press(getByTestId('eventButton'));
-  //   fireEvent.press(getByText('Buy Tickets'));
-  //   expect(mockNavigation.na).toHaveBeenCalledWith('https://test.com');
-  // });
 
   test('Pressing view route takes you to journey screen', () => {
     const mockNavigation = { navigate: jest.fn() };

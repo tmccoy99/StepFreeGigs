@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Text, View, TouchableOpacity } from 'react-native';
+import BuyTicketsButton from '../buyTicketsButton/buyTicketsButton';
 
 export default function Event({ eventData, navigation }) {
   const { eventName, priceRanges, venue, url, distance } = eventData;
@@ -19,12 +20,7 @@ export default function Event({ eventData, navigation }) {
         <Text>{venue}</Text>
         {isExpanded && (
           <>
-            <Button
-              title='Buy Tickets'
-              onPress={() => {
-                navigation.navigate(url);
-              }}
-            />
+            <BuyTicketsButton />
             <Button
               title='View Route'
               onPress={() => {
