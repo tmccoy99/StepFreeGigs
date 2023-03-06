@@ -5,7 +5,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-export const LocationContext = createContext(null);
+export const LocationContext = createContext('');
 
 export default function App() {
   const [currentLocation, setCurrentLocation] = useState({
