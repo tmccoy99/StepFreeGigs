@@ -4,10 +4,8 @@ import axios from 'axios';
 import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
 const baseURL = 'http://localhost:3000';
-import { LocationContext } from '../../App';
 
-export default function SearchScreen() {
-  const currentLocation = useContext(LocationContext);
+export default function SearchScreen({ currentLocation }) {
   const [events, setEvents] = useState(null);
   const onPress = async () => {
     const eventsData = await axios.get(`http://localhost:3000/events`, {

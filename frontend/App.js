@@ -5,7 +5,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-export const LocationContext = createContext('');
+
 
 export default function App() {
   const [currentLocation, setCurrentLocation] = useState({
@@ -27,13 +27,13 @@ export default function App() {
   }, []);
 
   return (
-    <LocationContext.Provider value={currentLocation}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='Search' component={SearchScreen}></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
-    </LocationContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Search'>
+          {() => <SearchScreen currentLocation={currentLocation} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
