@@ -10,7 +10,6 @@ import {
 export default function BuyTicketsButton({ url }) {
   const handlePress = async () => {
     const validURL = await Linking.canOpenURL(url);
-    debugger;
     validURL
       ? await Linking.openURL(url)
       : Alert.alert(`Cannot open URL: ${url}`);
