@@ -11,13 +11,16 @@ export default function SearchScreen({ navigation, route }) {
   const onPress = async () => {
     try {
       console.log(currentLocation);
-      const eventsData = await axios.get(`http://192.168.1.209/events`, {
-        params: {
-          latlong: `${currentLocation?.latitude},${currentLocation?.longitude}`,
-          radius: '5',
-        },
-      });
-      setEvents(eventsData.accessibleEvents);
+      const eventsData = await axios.get(
+        `https://step-free-gigs.onrender.com/events`,
+        {
+          params: {
+            latlong: `${currentLocation?.latitude},${currentLocation?.longitude}`,
+            radius: '5',
+          },
+        }
+      );
+      setEvents(eventsData.data.accessibleEvents);
     } catch (error) {
       console.log('Error retrieving events:', error);
     }
