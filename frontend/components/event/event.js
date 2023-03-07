@@ -10,9 +10,9 @@ export default function Event({ eventData, navigate }) {
   const onPress = () => {
     setExpanded(!isExpanded);
   };
-
+  console.log(eventName);
   return (
-    <View style={styles.eventContainer}>    
+    <View style={styles.eventContainer}>
       <TouchableOpacity onPress={onPress} testID='eventButton'>
         <View style={styles.eventHeader}>
           <View style={styles.eventHeaderLeft}>
@@ -26,7 +26,11 @@ export default function Event({ eventData, navigate }) {
           </View>
         </View>
         <Collapsible collapsed={!isExpanded}>
-          <View style={styles.eventFooter} testID='collapsible' isCollapsed={!isExpanded}>
+          <View
+            style={styles.eventFooter}
+            testID='collapsible'
+            isCollapsed={!isExpanded}
+          >
             <Button
               onPress={() => navigate(url)}
               size='sm'
@@ -57,35 +61,29 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-    marginBottom: 6
+    marginBottom: 6,
   },
   eventHeader: {
     minHeight: 50,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-  eventHeaderLeft: {
-
-  },
+  eventHeaderLeft: {},
   eventHeaderRight: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-  eventPrice: {
-    
-  },
+  eventPrice: {},
   eventName: {
     fontWeight: 700,
     fontSize: 18,
-    marginBottom: 8
+    marginBottom: 8,
   },
-  eventDistance: {
-
-  },
+  eventDistance: {},
   eventVenue: {
-    fontSize: 16
+    fontSize: 16,
   },
   eventFooter: {
     display: 'flex',
@@ -93,6 +91,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     marginTop: 10,
-    minHeight: 30
-  }
-})
+    minHeight: 30,
+  },
+});

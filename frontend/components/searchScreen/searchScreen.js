@@ -9,7 +9,7 @@ export default function SearchScreen() {
   const [events, setEvents] = useState(null);
   const onPress = async () => {
     const eventsData = await axios.get(`${baseURL}/events`);
-    setEvents(eventsData);
+    setEvents(eventsData.accessibleEvents);
   };
 
   return (
@@ -35,6 +35,6 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   logo: {
     width: 400,
-    height: 400
+    height: 400,
   },
-})
+});
