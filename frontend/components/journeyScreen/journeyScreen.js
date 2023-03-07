@@ -11,14 +11,15 @@ import {
 import RouteMap from '../map/map';
 import axios from 'axios';
 import Leg from '../leg/leg';
-import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
+// import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
 
 export default function JourneyScreen({
   navigation,
   startLocation,
   endLocation,
 }) {
-  const [directions, setDirections] = useState(mockTFLResponse);
+  // const [directions, setDirections] = useState(mockTFLResponse); use for mocking results for css
+  const [directions, setDirections] = useState();
   const [displayType, setDisplayType] = useState('Steps');
   const viewMap = () => {
     setDisplayType('Map');
@@ -36,9 +37,6 @@ export default function JourneyScreen({
     };
     if (!directions) getDirections();
   }, []);
-
-  const windowWidth = Dimensions.get('window').width;
-  const windowHeight = Dimensions.get('window').height;
 
   return (
     <>
