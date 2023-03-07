@@ -35,6 +35,7 @@ export default function SearchScreen({ navigation, route }) {
       {events &&
         events.map((data, index) => (
           <Event
+            currentLocation={currentLocation}
             eventData={data}
             key={index}
             navigation={navigation}

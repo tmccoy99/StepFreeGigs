@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Button,
   Text,
@@ -11,11 +11,8 @@ import RouteMap from '../map/map';
 import axios from 'axios';
 import Leg from '../leg/leg';
 
-export default function JourneyScreen({
-  navigation,
-  startLocation,
-  endLocation,
-}) {
+export default function JourneyScreen({ navigation, route }) {
+  const { currentLocation, endLocation } = route.params;
   const [directions, setDirections] = useState(null);
   const [displayType, setDisplayType] = useState('Steps');
   const viewMap = () => {
@@ -27,10 +24,20 @@ export default function JourneyScreen({
 
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('http://localhost:3000/journey', {
-        params: { start: startLocation, destination: endLocation },
-      });
-      setDirections(result.data);
+      try {
+        const result = await axios.get(
+          'https://step-free-gigs.onrender.com/journey',
+          {
+            params: {
+              start: `${currentLocation.latitude},${currentLocation.longitude}`,
+              destination: endLocation,
+            },
+          }
+        );
+        setDirections(result.data.directions);
+      } catch (error) {
+        console.error(error);
+      }
     };
     if (!directions) getDirections();
   }, []);
@@ -46,22 +53,22 @@ export default function JourneyScreen({
         <Button title='Map' onPress={viewMap} testID='Map button'></Button>
       </View>
       <View>
-        {displayType === 'Steps' ? (
-          directions &&
-          directions.journeys[0].legs.map((leg, index) => (
-            // <Text testID='Step' key={`Journey-${index}`}></Text>
-            <Leg
-              key={`Journey-${index}`}
-              summary={leg.summary}
-              steps={leg.steps}
-            />
-          ))
-        ) : (
-          <View>
-            <Text testID='Map'>Route map:</Text>
-            <RouteMap testID='Map' legs={directions.journeys[0].legs} />
-          </View>
-        )}
+        {displayType === 'Steps'
+          ? directions &&
+            directions.journeys[0].legs.map((leg, index) => (
+              // <Text testID='Step' key={`Journey-${index}`}></Text>
+              <Leg
+                key={`Journey-${index}`}
+                summary={leg.summary}
+                steps={leg.steps}
+              />
+            ))
+          : directions && (
+              <View>
+                <Text testID='Map'>Route map:</Text>
+                <RouteMap testID='Map' legs={directions.journeys[0].legs} />
+              </View>
+            )}
       </View>
     </>
   );
