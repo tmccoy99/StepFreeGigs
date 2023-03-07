@@ -21,10 +21,13 @@ export default function JourneyScreen({ navigation, route }) {
         const result = await axios.get(
           'https://step-free-gigs.onrender.com/journey',
           {
-            params: { start: currentLocation, destination: endLocation },
+            params: {
+              start: `${currentLocation.latitude},${currentLocation.longitude}`,
+              destination: endLocation,
+            },
           }
         );
-        setDirections(result.data);
+        setDirections(result.data.directions);
       } catch (error) {
         console.error(error);
       }
