@@ -3,13 +3,26 @@ import { StyleSheet, Button, Text, View, Image } from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
-const baseURL = 'http://localhost:3000';
 
-export default function SearchScreen() {
+export default function SearchScreen({ navigation, route }) {
+  const { currentLocation } = route.params;
   const [events, setEvents] = useState(null);
   const onPress = async () => {
-    const eventsData = await axios.get(`${baseURL}/events`);
-    setEvents(eventsData.accessibleEvents);
+    try {
+      console.log(currentLocation);
+      const eventsData = await axios.get(
+        `https://step-free-gigs.onrender.com/events`,
+        {
+          params: {
+            latlong: `${currentLocation?.latitude},${currentLocation?.longitude}`,
+            radius: '5',
+          },
+        }
+      );
+      setEvents(eventsData.data.accessibleEvents);
+    } catch (error) {
+      console.log('Error retrieving events:', error);
+    }
   };
 
   return (
@@ -21,7 +34,12 @@ export default function SearchScreen() {
       />
       {events &&
         events.map((data, index) => (
-          <Event eventData={data} key={index} testID='Event' />
+          <Event
+            eventData={data}
+            key={index}
+            navigation={navigation}
+            testID='Event'
+          />
         ))}
       {!events && (
         <>

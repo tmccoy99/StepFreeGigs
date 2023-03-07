@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/themed';
 import Collapsible from 'react-native-collapsible';
+import BuyTicketsButton from '../buyTicketsButton/buyTicketsButton';
 
-export default function Event({ eventData, navigate }) {
+export default function Event({ eventData, navigation }) {
   const { eventName, priceRanges, venue, url, distance } = eventData;
   const [isExpanded, setExpanded] = useState(false);
 
@@ -30,16 +31,9 @@ export default function Event({ eventData, navigate }) {
             testID='collapsible'
             isCollapsed={!isExpanded}
           >
+            <BuyTicketsButton />
             <Button
-              onPress={() => navigate(url)}
-              size='sm'
-              color='#FFA458'
-              testID='ticketButton'
-            >
-              Buy Tickets
-            </Button>
-            <Button
-              onPress={() => navigate('/journey')}
+              onPress={() => navigation.navigate('Journey')}
               size='sm'
               color='#FFA458'
               testID='journeyButton'

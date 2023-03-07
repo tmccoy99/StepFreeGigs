@@ -41,8 +41,7 @@ describe('Event component testing', () => {
   // });
 
   test('Buy tickets button is not rendered unless event pressed', () => {
-    const { getByTestId, getByText } = render(<Event eventData={{}} />);
-    const button = getByTestId('ticketButton');
+    const { getByTestId } = render(<Event eventData={{}} />);
     const collapsible = getByTestId('collapsible');
     expect(collapsible.props.isCollapsed).toBe(true)
   });
@@ -55,10 +54,10 @@ describe('Event component testing', () => {
   });
 
   test('Buy tickets button is rendered after event is pressed', () => {
-    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    const { getByTestId } = render(<Event eventData={{}} />);
     fireEvent.press(getByTestId('eventButton'));
-    const getTicketsButton = getByText('Buy Tickets');
-    expect(getTicketsButton).toBeDefined();
+    const getTicketsButton = getByTestId('Buy Tickets button');
+    expect(getTicketsButton).not.toBeNull();
   });
 
   test('View Route button is rendered after event is pressed', () => {
@@ -68,24 +67,14 @@ describe('Event component testing', () => {
     expect(getTicketsButton).toBeDefined();
   });
 
-  test('Pressing buy tickets takes you to given url', () => {
-    const mockNavigate = jest.fn();
+  test('Pressing view route takes you to journey screen', () => {
+    const mockNavigation = { navigate: jest.fn() };
     const { getByText, getByTestId } = render(
-      <Event eventData={{ url: 'https://test.com' }} navigate={mockNavigate} />
-    );
-    fireEvent.press(getByTestId('eventButton'));
-    fireEvent.press(getByText('Buy Tickets'));
-    expect(mockNavigate).toHaveBeenCalledWith('https://test.com');
-  });
-
-  test('Pressing view route takes you to journey page', () => {
-    const mockNavigate = jest.fn();
-    const { getByText, getByTestId } = render(
-      <Event eventData={{}} navigate={mockNavigate} />
+      <Event eventData={{}} navigation={mockNavigation} />
     );
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByText('View Route'));
-    expect(mockNavigate).toHaveBeenCalledWith('/journey');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('/journey');
   });
 
   test('Buy tickets button is not rendered after event pressed twice', () => {
