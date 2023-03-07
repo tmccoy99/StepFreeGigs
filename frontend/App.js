@@ -16,6 +16,7 @@ export default function App() {
     latitude: 51.537187,
     longitude: 0.050094,
   });
+
   console.log(currentLocation);
   useEffect(() => {
     const getLocation = async () => {
