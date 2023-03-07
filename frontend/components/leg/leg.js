@@ -15,7 +15,7 @@ export default function Leg({ summary, steps }) {
       <View>
         <Text>Leg</Text>
         <Text>{summary}</Text>
-        {steps && steps.map((step) => <Step />)}
+        {steps && steps.map((step, key) => <Step key={key} step={step} />)}
       </View>
     </>
   );

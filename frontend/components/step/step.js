@@ -8,11 +8,13 @@ import {
   StyleSheet,
 } from 'react-native';
 
-export default function Step() {
+export default function Step({ step }) {
   return (
     <>
       <View>
         <Text>Step</Text>
+        <Text>{step.descriptionHeading}</Text>
+        <Text>{step.description}</Text>
       </View>
     </>
   );
