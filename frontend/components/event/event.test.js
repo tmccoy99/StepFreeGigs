@@ -43,14 +43,13 @@ describe('Event component testing', () => {
   test('Buy tickets button is not rendered unless event pressed', () => {
     const { getByTestId } = render(<Event eventData={{}} />);
     const collapsible = getByTestId('collapsible');
-    expect(collapsible.props.isCollapsed).toBe(true)
+    expect(collapsible.props.isCollapsed).toBe(true);
   });
 
   test('View Route button is not rendered unless event pressed', () => {
-    const { getByTestId, getByText } = render(<Event eventData={{}} />);
-    const button = getByTestId('ticketButton');
+    const { getByTestId } = render(<Event eventData={{}} />);
     const collapsible = getByTestId('collapsible');
-    expect(collapsible.props.isCollapsed).toBe(true)
+    expect(collapsible.props.isCollapsed).toBe(true);
   });
 
   test('Buy tickets button is rendered after event is pressed', () => {
@@ -74,7 +73,7 @@ describe('Event component testing', () => {
     );
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByText('View Route'));
-    expect(mockNavigation.navigate).toHaveBeenCalledWith('/journey');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('Journey');
   });
 
   test('Buy tickets button is not rendered after event pressed twice', () => {
@@ -82,7 +81,7 @@ describe('Event component testing', () => {
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByTestId('eventButton'));
     const collapsible = getByTestId('collapsible');
-    expect(collapsible.props.isCollapsed).toBe(true)
+    expect(collapsible.props.isCollapsed).toBe(true);
   });
 
   test('View Route button is not rendered after event pressed twice', () => {
@@ -90,6 +89,6 @@ describe('Event component testing', () => {
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByTestId('eventButton'));
     const collapsible = getByTestId('collapsible');
-    expect(collapsible.props.isCollapsed).toBe(true)
+    expect(collapsible.props.isCollapsed).toBe(true);
   });
 });
