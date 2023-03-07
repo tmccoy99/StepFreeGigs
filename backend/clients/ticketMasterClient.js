@@ -5,10 +5,10 @@ const axiosCache = require('axios-cache-adapter');
 class TicketmasterClient {
   constructor() {
     this.baseUrl = 'https://app.ticketmaster.com/discovery/v2';
-    if (process.env.NODE_ENV !== 'test'){
+    if (process.env.NODE_ENV !== 'dev'){
       // Create `axios-cache-adapter` instance
       this.cache = axiosCache.setupCache({
-        maxAge: 15 * 60 * 1000
+        maxAge: 15 * 60 * 1000 // 15 min
       })
       // Create `axios` instance passing the newly created `cache.adapter`
       this.api = axios.create({
@@ -61,7 +61,7 @@ class TicketmasterClient {
 
     // Interacting with the store, see `localForage` API.
     const length = await this.cache.store.length()
-
+    console.log(this.cache)
     console.log('ticketMaster, Cache store length:', length)
 
     return events;
