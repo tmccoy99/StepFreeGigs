@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import RouteMap from '../map/map';
 import axios from 'axios';
@@ -36,6 +37,9 @@ export default function JourneyScreen({
     if (!directions) getDirections();
   }, []);
 
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
   return (
     <>
       <View>
@@ -57,8 +61,8 @@ export default function JourneyScreen({
             />
           ))
         ) : (
-          <View>
-            <Text testID='Map'>Route map:</Text>
+          <View style={styles.map}>
+            {/* <Text testID='Map'>Route map:</Text> */}
             <RouteMap testID='Map' legs={directions.journeys[0].legs} />
           </View>
         )}
@@ -66,3 +70,10 @@ export default function JourneyScreen({
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  map: {
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
+  },
+});
