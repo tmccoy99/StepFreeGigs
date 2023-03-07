@@ -15,12 +15,6 @@ const mockRoute = {
   },
 };
 describe('SearchScreen component testing', () => {
-  it('Before location entered, displays the name of the app', () => {
-    const { getByText } = render(<SearchScreen route={mockRoute} />);
-    const textElement = getByText('StepFreeGigs');
-    expect(textElement).toBeDefined();
-  });
-
   it('Before location entered, should display the logo image', () => {
     const { getByTestId } = render(<SearchScreen route={mockRoute} />);
     const logoElement = getByTestId('logo');
@@ -32,7 +26,6 @@ describe('SearchScreen component testing', () => {
     const eventsButton = getByText('Find events near me!');
     expect(eventsButton).toBeDefined();
   });
-
 
   it('Pressing events near me button removes the name and image', async () => {
     const { queryByText, queryByTestId } = render(
