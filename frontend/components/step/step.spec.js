@@ -8,7 +8,7 @@ describe('step component', () => {
       description: 'along this road',
     };
     renderedComponent = render(<Step step={stepProp} />);
-    expect(renderedComponent.getByText('Step')).not.toBeNull;
+    expect(renderedComponent.getByTestId('Step')).not.toBeNull;
     expect(renderedComponent.getByText('Turn right')).not.toBeNull;
     expect(renderedComponent.getByText('along this road')).not.toBeNull;
   });
