@@ -1,26 +1,18 @@
-const axios = require('axios');
+const Axios = require('axios');
 const ticketMasterAPIKey = require('../ticketMasterAPIKey');
-const axiosCache = require('axios-cache-adapter');
+const axiosCache = require('axios-cache-interceptor');
 
 class TicketmasterClient {
   constructor() {
     this.baseUrl = 'https://app.ticketmaster.com/discovery/v2';
     if (process.env.NODE_ENV !== 'dev'){
-      // Create `axios-cache-adapter` instance
-      this.cache = axiosCache.setupCache({
-        maxAge: 15 * 60 * 1000 // 15 min
-      })
-      // Create `axios` instance passing the newly created `cache.adapter`
-      this.api = axios.create({
-        adapter: this.cache.adapter
-      })
+      this.axios = axiosCache.setupCache(Axios)
     }
   }
 
   async getEvents(latlong, radius) {
-    const response = await this.api({
-      url: `${this.baseUrl}/events`,
-      method: 'get',
+
+    const response = await this.axios.get(`${this.baseUrl}/events`, {
       params: {
         apikey: ticketMasterAPIKey,
         latlong,
@@ -28,19 +20,8 @@ class TicketmasterClient {
         unit: 'miles',
         sort: 'date,asc',
         classificationId: 'KZFzniwnSyZfZ7v7nJ',
-      }
-    })
-
-    // const response = await axios.get(`${this.baseUrl}/events`, {
-    //   params: {
-    //     apikey: ticketMasterAPIKey,
-    //     latlong,
-    //     radius,
-    //     unit: 'miles',
-    //     sort: 'date,asc',
-    //     classificationId: 'KZFzniwnSyZfZ7v7nJ',
-    //   },
-    // });
+      },
+    });
 
     const events = response.data._embedded.events.map((event) => {
       return {
@@ -59,10 +40,7 @@ class TicketmasterClient {
       };
     });
 
-    // Interacting with the store, see `localForage` API.
-    const length = await this.cache.store.length()
-    console.log(this.cache)
-    console.log('ticketMaster, Cache store length:', length)
+    console.log(response.cached);
 
     return events;
   }
