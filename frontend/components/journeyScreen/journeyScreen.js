@@ -10,13 +10,14 @@ import {
 import RouteMap from '../map/map';
 import axios from 'axios';
 import Leg from '../leg/leg';
+import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
 
 export default function JourneyScreen({
   navigation,
   startLocation,
   endLocation,
 }) {
-  const [directions, setDirections] = useState(null);
+  const [directions, setDirections] = useState(mockTFLResponse);
   const [displayType, setDisplayType] = useState('Steps');
   const viewMap = () => {
     setDisplayType('Map');
@@ -49,11 +50,10 @@ export default function JourneyScreen({
         {displayType === 'Steps' ? (
           directions &&
           directions.journeys[0].legs.map((leg, index) => (
-            // <Text testID='Step' key={`Journey-${index}`}></Text>
             <Leg
               key={`Journey-${index}`}
-              summary={leg.summary}
-              steps={leg.steps}
+              summary={leg.instruction.summary}
+              steps={leg.instruction.steps}
             />
           ))
         ) : (
