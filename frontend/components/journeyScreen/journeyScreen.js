@@ -10,7 +10,6 @@ import {
 import RouteMap from '../map/map';
 import axios from 'axios';
 import Leg from '../leg/leg';
-import { contextLocation } from '../../App';
 
 export default function JourneyScreen({ navigation, route }) {
   const { currentLocation, endLocation } = route.params;
@@ -51,22 +50,22 @@ export default function JourneyScreen({ navigation, route }) {
         <Button title='Map' onPress={viewMap} testID='Map button'></Button>
       </View>
       <View>
-        {displayType === 'Steps' ? (
-          directions &&
-          directions.journeys[0].legs.map((leg, index) => (
-            // <Text testID='Step' key={`Journey-${index}`}></Text>
-            <Leg
-              key={`Journey-${index}`}
-              summary={leg.summary}
-              steps={leg.steps}
-            />
-          ))
-        ) : (
-          <View>
-            <Text testID='Map'>Route map:</Text>
-            <RouteMap testID='Map' legs={directions.journeys[0].legs} />
-          </View>
-        )}
+        {displayType === 'Steps'
+          ? directions &&
+            directions.journeys[0].legs.map((leg, index) => (
+              // <Text testID='Step' key={`Journey-${index}`}></Text>
+              <Leg
+                key={`Journey-${index}`}
+                summary={leg.summary}
+                steps={leg.steps}
+              />
+            ))
+          : directions && (
+              <View>
+                <Text testID='Map'>Route map:</Text>
+                <RouteMap testID='Map' legs={directions.journeys[0].legs} />
+              </View>
+            )}
       </View>
     </>
   );
