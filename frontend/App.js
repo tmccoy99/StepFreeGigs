@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import SearchScreen from './components/searchScreen/searchScreen';
-// import JourneyScreen from './components/journeyScreen/journeyScreen
+import JourneyScreen from './components/journeyScreen/journeyScreen';
 import * as Location from 'expo-location';
 
 import React, { useState, useEffect } from 'react';
@@ -45,7 +45,7 @@ export default function App() {
           component={SearchScreen}
           initialParams={{ currentLocation }}
         />
-        {/* <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen> */}
+        <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
