@@ -47,7 +47,7 @@ describe('JourneyScreen component testing', () => {
   });
 
   describe('Leg component display', () => {
-    test.only('renders leg components initially', async () => {
+    test('renders leg components initially', async () => {
       await waitFor(() => {
         renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });

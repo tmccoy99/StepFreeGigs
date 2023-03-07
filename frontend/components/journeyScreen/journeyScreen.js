@@ -32,11 +32,11 @@ export default function JourneyScreen({ navigation, route }) {
           }
         );
         setDirections(result.data);
-        if (!directions) getDirections();
       } catch (error) {
         console.error(error);
       }
     };
+    if (!directions) getDirections();
   }, []);
 
   return (
