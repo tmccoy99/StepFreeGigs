@@ -12,9 +12,15 @@ export default function SearchScreen({ navigation, route }) {
     try {
       console.log(currentLocation);
       const eventsData = await axios.get(
-        `https://step-free-gigs.onrender.com/events?latlong=51.4919120,-0.1692555&radius=5`
+        `https://step-free-gigs.onrender.com/events`,
+        {
+          params: {
+            latlong: `${currentLocation?.latitude},${currentLocation?.longitude}`,
+            radius: '5',
+          },
+        }
       );
-      setEvents(eventsData.accessibleEvents);
+      setEvents(eventsData.data.accessibleEvents);
     } catch (error) {
       console.log('Error retrieving events:', error);
     }
