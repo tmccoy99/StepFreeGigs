@@ -62,8 +62,8 @@ export default function JourneyScreen({
           ))
         ) : (
           <View style={styles.map}>
-            {/* <Text testID='Map'>Route map:</Text> */}
-            <RouteMap testID='Map' legs={directions.journeys[0].legs} />
+            <Text testID='Map'>Route map:</Text>
+            <RouteMap legs={directions.journeys[0].legs} />
           </View>
         )}
       </View>

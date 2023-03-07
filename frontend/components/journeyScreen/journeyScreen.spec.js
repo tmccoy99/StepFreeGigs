@@ -58,7 +58,7 @@ describe('JourneyScreen component testing', () => {
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
         );
       });
-      expect(renderedComponent.queryAllByText('Leg').length).toBe(3);
+      expect(renderedComponent.queryAllByTestId('Leg').length).toBe(3);
     });
 
     test('does not render leg components after map button pressed', async () => {
@@ -79,7 +79,7 @@ describe('JourneyScreen component testing', () => {
       });
       fireEvent.press(renderedComponent.getByTestId('Map button'));
       fireEvent.press(renderedComponent.getByTestId('Steps button'));
-      expect(renderedComponent.queryAllByText('Leg').length).toBe(3);
+      expect(renderedComponent.queryAllByTestId('Leg').length).toBe(3);
     });
   });
 });
