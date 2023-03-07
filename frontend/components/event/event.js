@@ -4,8 +4,9 @@ import { Button } from '@rneui/themed';
 import Collapsible from 'react-native-collapsible';
 import BuyTicketsButton from '../buyTicketsButton/buyTicketsButton';
 
-export default function Event({ eventData, navigation }) {
-  const { eventName, priceRanges, venue, url, distance } = eventData;
+export default function Event({ eventData, navigation, currentLocation }) {
+  const { eventName, priceRanges, venue, url, distance, venuePostcode } =
+    eventData;
   const [isExpanded, setExpanded] = useState(false);
 
   const onPress = () => {
@@ -31,9 +32,14 @@ export default function Event({ eventData, navigation }) {
             testID='collapsible'
             isCollapsed={!isExpanded}
           >
-            <BuyTicketsButton />
+            <BuyTicketsButton url={url} />
             <Button
-              onPress={() => navigation.navigate('Journey')}
+              onPress={() => {
+                navigation.navigate('Journey', {
+                  currentLocation: currentLocation,
+                  endLocation: venuePostcode,
+                });
+              }}
               size='sm'
               color='#FFA458'
               testID='journeyButton'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Button,
   Text,
@@ -10,12 +10,10 @@ import {
 import RouteMap from '../map/map';
 import axios from 'axios';
 import Leg from '../leg/leg';
+import { contextLocation } from '../../App';
 
-export default function JourneyScreen({
-  navigation,
-  startLocation,
-  endLocation,
-}) {
+export default function JourneyScreen({ navigation, route }) {
+  const { currentLocation, endLocation } = route.params;
   const [directions, setDirections] = useState(null);
   const [displayType, setDisplayType] = useState('Steps');
   const viewMap = () => {
@@ -27,12 +25,19 @@ export default function JourneyScreen({
 
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('http://localhost:3000/journey', {
-        params: { start: startLocation, destination: endLocation },
-      });
-      setDirections(result.data);
+      try {
+        const result = await axios.get(
+          'https://step-free-gigs.onrender.com/journey',
+          {
+            params: { start: currentLocation, destination: endLocation },
+          }
+        );
+        setDirections(result.data);
+        if (!directions) getDirections();
+      } catch (error) {
+        console.error(error);
+      }
     };
-    if (!directions) getDirections();
   }, []);
 
   return (
