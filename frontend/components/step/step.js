@@ -7,15 +7,12 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import Step from '../step/step';
 
-export default function Leg({ summary, steps }) {
+export default function Step() {
   return (
     <>
       <View>
-        <Text>Leg</Text>
-        <Text>{summary}</Text>
-        {steps && steps.map((step) => <Step />)}
+        <Text>Step</Text>
       </View>
     </>
   );
