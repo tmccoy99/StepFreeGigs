@@ -10,7 +10,6 @@ export default function Event({ eventData, navigate }) {
   const onPress = () => {
     setExpanded(!isExpanded);
   };
-  console.log(eventName);
   return (
     <View style={styles.eventContainer}>
       <TouchableOpacity onPress={onPress} testID='eventButton'>
