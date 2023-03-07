@@ -24,9 +24,9 @@ export default function Event({ eventData, navigation }) {
             <Button
               title='View Route'
               onPress={() => {
-                navigation.navigate('/journey');
+                navigation.navigate('Journey');
               }}
-            />{' '}
+            />
           </>
         )}
       </TouchableOpacity>

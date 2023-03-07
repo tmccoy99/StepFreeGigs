@@ -26,9 +26,12 @@ export default function JourneyScreen({
 
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('http://localhost:3000/journey', {
-        params: { start: startLocation, destination: endLocation },
-      });
+      const result = await axios.get(
+        'https://step-free-gigs.onrender.com/journey',
+        {
+          params: { start: startLocation, destination: endLocation },
+        }
+      );
       setDirections(result.data);
     };
     if (!directions) getDirections();
