@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import React from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 
 export default function Step({ step }) {
   return (

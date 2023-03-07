@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { Button, Text, View, StyleSheet, Dimensions } from 'react-native';
 import RouteMap from '../map/map';
 import axios from 'axios';
 import Leg from '../leg/leg';
