@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import RouteMap from '../map/map';
 import axios from 'axios';
+import Leg from '../leg/leg';
 
 export default function JourneyScreen({
   navigation,
@@ -47,8 +48,13 @@ export default function JourneyScreen({
       <View>
         {displayType === 'Steps' ? (
           directions &&
-          directions.journeys.map((steps, index) => (
-            <Text testID='Step' key={`Journey-${index}`}></Text>
+          directions.journeys[0].legs.map((leg, index) => (
+            // <Text testID='Step' key={`Journey-${index}`}></Text>
+            <Leg
+              key={`Journey-${index}`}
+              summary={leg.summary}
+              steps={leg.steps}
+            />
           ))
         ) : (
           <View>

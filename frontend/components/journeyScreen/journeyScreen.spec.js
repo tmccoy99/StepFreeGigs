@@ -51,27 +51,27 @@ describe('JourneyScreen component testing', () => {
     });
   });
 
-  describe('Step component display', () => {
-    test('renders step components initially', async () => {
+  describe('Leg component display', () => {
+    test('renders leg components initially', async () => {
       await waitFor(() => {
         renderedComponent = render(
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
         );
       });
-      expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
+      expect(renderedComponent.queryAllByText('Leg').length).toBe(3);
     });
 
-    test('does not render step components after map button pressed', async () => {
+    test('does not render leg components after map button pressed', async () => {
       await waitFor(() => {
         renderedComponent = render(
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
         );
       });
       fireEvent.press(renderedComponent.getByTestId('Map button'));
-      expect(renderedComponent.queryByTestId('Step')).toBeNull();
+      expect(renderedComponent.queryByText('Leg')).toBeNull();
     });
 
-    test('step components reappear once step button is pressed', async () => {
+    test('leg components reappear once step button is pressed', async () => {
       await waitFor(() => {
         renderedComponent = render(
           <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
@@ -79,7 +79,7 @@ describe('JourneyScreen component testing', () => {
       });
       fireEvent.press(renderedComponent.getByTestId('Map button'));
       fireEvent.press(renderedComponent.getByTestId('Steps button'));
-      expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
+      expect(renderedComponent.queryAllByText('Leg').length).toBe(3);
     });
   });
 });
