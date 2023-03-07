@@ -11,7 +11,7 @@ export default function SearchScreen({ navigation, route }) {
   const onPress = async () => {
     try {
       console.log(currentLocation);
-      const eventsData = await axios.get(`http://localhost:3000/events`, {
+      const eventsData = await axios.get(`http://192.168.1.209/events`, {
         params: {
           latlong: `${currentLocation?.latitude},${currentLocation?.longitude}`,
           radius: '5',
