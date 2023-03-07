@@ -1,18 +1,20 @@
-const Axios = require('axios');
+const axios = require('axios');
 const ticketMasterAPIKey = require('../ticketMasterAPIKey');
-const axiosCache = require('axios-cache-interceptor');
+const axiosCache = require('axios-cache-interceptor/dev');
 
 class TicketmasterClient {
   constructor() {
     this.baseUrl = 'https://app.ticketmaster.com/discovery/v2';
-    if (process.env.NODE_ENV !== 'dev'){
-      this.axios = axiosCache.setupCache(Axios)
-    }
+    // if (process.env.NODE_ENV == 'dev'){
+    //   this.axios = axiosCache.setupCache(Axios, {
+    //     debug:console.log
+    //   });
+    //   console.log('caching');
+    // // }
   }
 
   async getEvents(latlong, radius) {
-
-    const response = await this.axios.get(`${this.baseUrl}/events`, {
+    const response = await axios.get(`${this.baseUrl}/events`, {
       params: {
         apikey: ticketMasterAPIKey,
         latlong,
@@ -22,6 +24,8 @@ class TicketmasterClient {
         classificationId: 'KZFzniwnSyZfZ7v7nJ',
       },
     });
+
+    console.log(response.data);
 
     const events = response.data._embedded.events.map((event) => {
       return {
@@ -40,7 +44,7 @@ class TicketmasterClient {
       };
     });
 
-    console.log(response.cached);
+    // console.log(response.cached);
 
     return events;
   }
