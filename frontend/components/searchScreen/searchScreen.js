@@ -19,7 +19,6 @@ export default function SearchScreen() {
         title='Find events near me!'
         testID='search-button'
       />
-
       {events &&
         events.map((data, index) => (
           <Event eventData={data} key={index} testID='Event' />

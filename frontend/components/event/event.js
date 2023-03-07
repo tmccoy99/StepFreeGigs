@@ -25,8 +25,8 @@ export default function Event({ eventData, navigate }) {
             <Text style={styles.eventDistance}>{distance}</Text>
           </View>
         </View>
-        <Collapsible collapsed={!isExpanded} testID='collapsible'>
-          <View style={styles.eventFooter}>
+        <Collapsible collapsed={!isExpanded}>
+          <View style={styles.eventFooter} testID='collapsible' isCollapsed={!isExpanded}>
             <Button
               onPress={() => navigate(url)}
               size='sm'

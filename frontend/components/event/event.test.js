@@ -40,18 +40,19 @@ describe('Event component testing', () => {
   //   expect(textElement).toBeDefined();
   // });
 
-  // test('Buy tickets button is not rendered unless event pressed', () => {
-  //   const { getByTestId } = render(<Event eventData={{}} />);
-  //   const button = getByTestId('ticketButton');
-  //   expect(button).not.toBeDefined()
-  // });
+  test('Buy tickets button is not rendered unless event pressed', () => {
+    const { getByTestId, getByText } = render(<Event eventData={{}} />);
+    const button = getByTestId('ticketButton');
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
+  });
 
-  // test('View Route button is not rendered unless event pressed', () => {
-  //   const { getByText } = render(<Event eventData={{}} />);
-  //   expect(() => {
-  //     getByText('View Route');
-  //   }).toThrow(new Error('Unable to find an element with text: View Route'));
-  // });
+  test('View Route button is not rendered unless event pressed', () => {
+    const { getByTestId, getByText } = render(<Event eventData={{}} />);
+    const button = getByTestId('ticketButton');
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
+  });
 
   test('Buy tickets button is rendered after event is pressed', () => {
     const { getByText, getByTestId } = render(<Event eventData={{}} />);
@@ -87,21 +88,19 @@ describe('Event component testing', () => {
     expect(mockNavigate).toHaveBeenCalledWith('/journey');
   });
 
-  // test('Buy tickets button is not rendered after event pressed twice', () => {
-  //   const { getByText, getByTestId } = render(<Event eventData={{}} />);
-  //   fireEvent.press(getByTestId('eventButton'));
-  //   fireEvent.press(getByTestId('eventButton'));
-  //   expect(() => {
-  //     getByText('Buy Tickets');
-  //   }).toThrow(new Error('Unable to find an element with text: Buy Tickets'));
-  // });
+  test('Buy tickets button is not rendered after event pressed twice', () => {
+    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'));
+    fireEvent.press(getByTestId('eventButton'));
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
+  });
 
-  // test('View Route button is not rendered after event pressed twice', () => {
-  //   const { getByText, getByTestId } = render(<Event eventData={{}} />);
-  //   fireEvent.press(getByTestId('eventButton'));
-  //   fireEvent.press(getByTestId('eventButton'));
-  //   expect(() => {
-  //     getByText('View Route');
-  //   }).toThrow(new Error('Unable to find an element with text: View Route'));
-  // });
+  test('View Route button is not rendered after event pressed twice', () => {
+    const { getByText, getByTestId } = render(<Event eventData={{}} />);
+    fireEvent.press(getByTestId('eventButton'));
+    fireEvent.press(getByTestId('eventButton'));
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
+  });
 });

@@ -5,10 +5,10 @@ import fakeEvents from '../../fixtures/mockEvents';
 jest.mock('axios');
 const baseURL = process.env.NATIVE_APP_API_URL;
 describe('SearchScreen component testing', () => {
-  it('Before location entered, displays the name of the app', () => {
-    const { getByText } = render(<SearchScreen />);
-    const textElement = getByText('StepFreeGigs');
-    expect(textElement).toBeDefined();
+  it('Before location entered, displays the Logo', () => {
+    const { getByTestId } = render(<SearchScreen />);
+    const logo = getByTestId('logo');
+    expect(logo).toBeDefined();
   });
 
   it('Before location entered, should display the logo image', () => {
@@ -23,13 +23,12 @@ describe('SearchScreen component testing', () => {
     expect(eventsButton).toBeDefined();
   });
 
-  it('Pressing events near me button removes the name and image', async () => {
+  it('Pressing events near me button removes the logo', async () => {
     const { queryByText, queryByTestId } = render(<SearchScreen />);
     axios.get.mockResolvedValueOnce(fakeEvents);
     await waitFor(() => {
       fireEvent.press(queryByText('Find events near me!'));
     });
-    expect(queryByText('StepFreeGigs')).toBeNull();
     expect(queryByTestId('logo')).toBeNull();
   });
 
