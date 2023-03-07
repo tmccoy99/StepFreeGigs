@@ -8,6 +8,8 @@ class TicketmasterClient {
   }
 
   async getEvents(latlong, radius) {
+    console.log('deployed API key potato');
+    console.log(process.env.TICKET_MASTER_API_KEY);
     const response = await axios.get(`${this.baseUrl}/events`, {
       params: {
         apikey: process.env.TICKET_MASTER_API_KEY,
