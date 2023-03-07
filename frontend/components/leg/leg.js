@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button,
   Text,
   View,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import { Button } from '@rneui/themed';
 import Step from '../step/step';
 
 export default function Leg({ summary, steps }) {
@@ -15,14 +15,18 @@ export default function Leg({ summary, steps }) {
   return (
     <>
       <View style={styles.legContainer}>
-        <Text testID='Leg'>{summary}</Text>
+        <Text style={styles.legHeading} testID='Leg'>
+          {summary}
+        </Text>
 
         {steps && steps.length > 0 && (
           <Button
             onPress={() => {
               setIsExpanded(!isExpanded);
             }}
-            title={isExpanded ? 'hide steps' : 'show steps'}
+            title={isExpanded ? 'Hide steps' : 'Show steps'}
+            size='sm'
+            color='#FFA458'
             testID='showSteps'
           />
         )}
@@ -42,5 +46,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 6,
+  },
+  legHeading: {
+    fontWeight: 700,
+    fontSize: 18,
+    marginBottom: 8,
   },
 });

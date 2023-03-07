@@ -12,8 +12,10 @@ export default function Step({ step }) {
   return (
     <>
       <View style={styles.stepContainer}>
-        <Text testID='Step'>{step.descriptionHeading}</Text>
-        <Text>{step.description}</Text>
+        <Text style={styles.stepHeading} testID='Step'>
+          {step.descriptionHeading}
+        </Text>
+        <Text style={styles.stepDesc}>{step.description}</Text>
       </View>
     </>
   );
@@ -21,14 +23,20 @@ export default function Step({ step }) {
 
 const styles = StyleSheet.create({
   stepContainer: {
-    backgroundColor: '#D3D3D3',
+    backgroundColor: '#fff',
     padding: 15,
     paddingBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-    marginBottom: 6,
+    marginBottom: 3,
+    marginTop: 3,
   },
   step: {
     opacity: 0,
+  },
+  stepHeading: {
+    fontWeight: 700,
+    fontSize: 18,
+    marginBottom: 8,
   },
 });
