@@ -33,6 +33,7 @@ describe('SearchScreen component testing', () => {
     expect(eventsButton).toBeDefined();
   });
 
+
   it('Pressing events near me button removes the name and image', async () => {
     const { queryByText, queryByTestId } = render(
       <SearchScreen route={mockRoute} />
@@ -41,7 +42,6 @@ describe('SearchScreen component testing', () => {
     await waitFor(() => {
       fireEvent.press(queryByText('Find events near me!'));
     });
-    expect(queryByText('StepFreeGigs')).toBeNull();
     expect(queryByTestId('logo')).toBeNull();
   });
 

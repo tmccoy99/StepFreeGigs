@@ -42,18 +42,15 @@ describe('Event component testing', () => {
 
   test('Buy tickets button is not rendered unless event pressed', () => {
     const { getByTestId } = render(<Event eventData={{}} />);
-    expect(() => {
-      getByTestId('Buy Tickets button');
-    }).toThrow(
-      new Error('Unable to find an element with testID: Buy Tickets button')
-    );
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
   });
 
   test('View Route button is not rendered unless event pressed', () => {
-    const { getByText } = render(<Event eventData={{}} />);
-    expect(() => {
-      getByText('View Route');
-    }).toThrow(new Error('Unable to find an element with text: View Route'));
+    const { getByTestId, getByText } = render(<Event eventData={{}} />);
+    const button = getByTestId('ticketButton');
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
   });
 
   test('Buy tickets button is rendered after event is pressed', () => {
@@ -84,17 +81,15 @@ describe('Event component testing', () => {
     const { getByText, getByTestId } = render(<Event eventData={{}} />);
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByTestId('eventButton'));
-    expect(() => {
-      getByText('Buy Tickets');
-    }).toThrow(new Error('Unable to find an element with text: Buy Tickets'));
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
   });
 
   test('View Route button is not rendered after event pressed twice', () => {
     const { getByText, getByTestId } = render(<Event eventData={{}} />);
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByTestId('eventButton'));
-    expect(() => {
-      getByText('View Route');
-    }).toThrow(new Error('Unable to find an element with text: View Route'));
+    const collapsible = getByTestId('collapsible');
+    expect(collapsible.props.isCollapsed).toBe(true)
   });
 });

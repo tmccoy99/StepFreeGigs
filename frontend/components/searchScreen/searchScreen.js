@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { Button, Text, View, Image } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Button, Text, View, Image } from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
-const baseURL = 'http://localhost:3000';
 
 export default function SearchScreen({ navigation, route }) {
   const { currentLocation } = route.params;
@@ -44,10 +43,16 @@ export default function SearchScreen({ navigation, route }) {
         ))}
       {!events && (
         <>
-          <Text>StepFreeGigs</Text>
-          <Image testID='logo' source={logo} />
+          <Image testID='logo' source={logo} style={styles.logo} />
         </>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 400,
+    height: 400,
+  },
+});
