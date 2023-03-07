@@ -69,11 +69,18 @@ describe('Event component testing', () => {
   test('Pressing view route takes you to journey screen', () => {
     const mockNavigation = { navigate: jest.fn() };
     const { getByText, getByTestId } = render(
-      <Event eventData={{}} navigation={mockNavigation} />
+      <Event
+        eventData={{ venuePostcode: 'fakePostcode' }}
+        currentLocation='fakeLocation'
+        navigation={mockNavigation}
+      />
     );
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByText('View Route'));
-    expect(mockNavigation.navigate).toHaveBeenCalledWith('Journey');
+    expect(mockNavigation.navigate).toHaveBeenCalledWith('Journey', {
+      currentLocation: 'fakeLocation',
+      endLocation: 'fakePostcode',
+    });
   });
 
   test('Buy tickets button is not rendered after event pressed twice', () => {

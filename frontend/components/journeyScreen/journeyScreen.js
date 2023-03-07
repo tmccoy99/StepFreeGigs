@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Button,
   Text,
@@ -12,12 +12,9 @@ import axios from 'axios';
 import Leg from '../leg/leg';
 import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
 
-export default function JourneyScreen({
-  navigation,
-  startLocation,
-  endLocation,
-}) {
-  const [directions, setDirections] = useState(mockTFLResponse);
+export default function JourneyScreen({ navigation, route }) {
+  const { currentLocation, endLocation } = route.params;
+  const [directions, setDirections] = useState(null);
   const [displayType, setDisplayType] = useState('Steps');
   const viewMap = () => {
     setDisplayType('Map');
@@ -28,10 +25,20 @@ export default function JourneyScreen({
 
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('http://localhost:3000/journey', {
-        params: { start: startLocation, destination: endLocation },
-      });
-      setDirections(result.data);
+      try {
+        const result = await axios.get(
+          'https://step-free-gigs.onrender.com/journey',
+          {
+            params: {
+              start: `${currentLocation.latitude},${currentLocation.longitude}`,
+              destination: endLocation,
+            },
+          }
+        );
+        setDirections(result.data.directions);
+      } catch (error) {
+        console.error(error);
+      }
     };
     if (!directions) getDirections();
   }, []);
@@ -56,7 +63,7 @@ export default function JourneyScreen({
               steps={leg.instruction.steps}
             />
           ))
-        ) : (
+        ) : directions &&  (
           <View>
             <Text testID='Map'>Route map:</Text>
             <RouteMap testID='Map' legs={directions.journeys[0].legs} />
