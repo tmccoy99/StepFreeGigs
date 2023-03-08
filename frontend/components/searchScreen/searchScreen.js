@@ -31,6 +31,8 @@ export default function SearchScreen({ navigation, route }) {
         onPress={onPress}
         title='Find events near me!'
         testID='search-button'
+        size='sm'
+        color='#FFA458'
       />
       {events &&
         events.map((data, index) => (
