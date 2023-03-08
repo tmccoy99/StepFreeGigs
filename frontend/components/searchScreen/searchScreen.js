@@ -47,7 +47,7 @@ export default function SearchScreen({ navigation, route }) {
       <Button
         title='clear'
         onPress={() => {
-          setEvents(null);
+          setEvents(null), setIsLoading(false);
         }}
       />
       {isLoading && (
