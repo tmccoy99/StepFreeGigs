@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 
 export default RouteMap = ({ legs }) => {
   const [mapLayout, setMapLayout] = useState(null);
-
+  const mapViewRef = useRef(null);
   const onMapLayout = (event) => {
     setMapLayout(event.nativeEvent.layout);
   };
@@ -16,7 +16,8 @@ export default RouteMap = ({ legs }) => {
         latitude: leg.arrivalPoint.lat,
         longitude: leg.arrivalPoint.lon,
       }}
-      title={leg.arrivalPoint.commonName}
+      title={leg.instruction.summary}
+      pinColor='#f7a45f'
       testID='marker'
     />
   ));
@@ -32,7 +33,7 @@ export default RouteMap = ({ legs }) => {
       <Polyline
         key={index}
         coordinates={polylineObjects}
-        strokeColor='#F00'
+        strokeColor='#2196f3'
         strokeWidth={3}
         testID='polyline'
       />
@@ -41,17 +42,26 @@ export default RouteMap = ({ legs }) => {
 
   let region = null;
   if (mapLayout) {
-    region = {
+    const startCoords = {
       latitude: legs[0].departurePoint.lat,
       longitude: legs[0].departurePoint.lon,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
     };
+    const endCoords = {
+      latitude: legs[0].arrivalPoint.lat,
+      longitude: legs[0].arrivalPoint.lon,
+    };
+    const coords = [startCoords, endCoords];
+
+    mapViewRef.current.fitToCoordinates(coords, {
+      edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+      animated: false,
+    });
   }
 
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapViewRef}
         style={styles.map}
         region={region}
         onLayout={onMapLayout}
