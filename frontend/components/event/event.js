@@ -68,19 +68,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  eventHeaderLeft: {},
+  eventHeaderLeft: {
+    maxWidth: '75%'
+  },
   eventHeaderRight: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    maxWidth: '25%'
   },
-  eventPrice: {},
+  eventPrice: {
+    fontSize: 15,
+    textAlign: 'right',
+  },
   eventName: {
     fontWeight: 700,
     fontSize: 18,
     marginBottom: 8,
   },
-  eventDistance: {},
+  eventDistance: {
+    textAlign: 'right',
+    marginTop: 8
+  },
   eventVenue: {
     fontSize: 16,
   },

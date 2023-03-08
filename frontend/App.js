@@ -40,15 +40,16 @@ export default function App() {
 
   return (
 
-    <NavigationContainer style={styles.container}>
-      <Stack.Navigator 
-          initialRouteName='Search'
-          screenOptions={{
-            contentStyle: {
-              backgroundColor: '#FFFFFF',
-            },
-          }}
-        >
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName='Search'
+        screenOptions={{
+          contentStyle: {
+            backgroundColor: '#FFFFFF',
+          },
+        }}
+      >
+
         <Stack.Screen
           name='Search'
           component={SearchScreen}
