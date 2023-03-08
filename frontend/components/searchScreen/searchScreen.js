@@ -44,12 +44,15 @@ export default function SearchScreen({ navigation, route }) {
         title='Find events near me!'
         testID='search-button'
       />
-      <Button
-        title='clear'
-        onPress={() => {
-          setEvents(null), setIsLoading(false);
-        }}
-      />
+      {events && (
+        <Button
+          title='clear'
+          testID='clearButton'
+          onPress={() => {
+            setEvents(null), setIsLoading(false);
+          }}
+        />
+      )}
       {isLoading && (
         <View style={styles.loadingContainer}>
           <Image

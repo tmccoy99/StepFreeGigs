@@ -48,4 +48,18 @@ describe('SearchScreen component testing', () => {
       expect(queryByText(`Event ${i}`)).not.toBeNull();
     }
   });
+
+  it('does does not render the clear button when no events have been loaded', () => {
+    const { queryByTestId } = render(<SearchScreen route={mockRoute} />);
+    expect(queryByTestId('clearButton')).toBeNull();
+  })
+
+  it('renders the clear button when the events have been loaded', async () => {
+    const { queryByTestId, queryByText } = render(<SearchScreen route={mockRoute} />);
+    axios.get.mockResolvedValueOnce(fakeEvents);
+    await waitFor(() => {
+      fireEvent.press(queryByText('Find events near me!'));
+    });
+    expect(queryByTestId('clearButton')).toBeDefined();
+  })
 });
