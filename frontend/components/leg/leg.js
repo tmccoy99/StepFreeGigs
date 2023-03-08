@@ -10,7 +10,7 @@ export default function Leg({ summary, steps }) {
     <>
       <View style={styles.legContainer}>
         <Text style={styles.legHeading} testID='Leg'>
-          {summary.replace('Walk', 'Travel')}
+          {summary?.replace('Walk', 'Travel')}
         </Text>
 
         {steps && steps.length > 0 && (
