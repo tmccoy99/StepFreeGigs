@@ -6,6 +6,7 @@ import {
   View,
   Image,
   Text,
+  ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';
@@ -36,7 +37,7 @@ export default function SearchScreen({ navigation, route }) {
   };
 
   return (
-    <View testID='SearchScreen'>
+    <ScrollView testID='SearchScreen'>
       <Button
         onPress={() => {
           onPress(), setIsLoading(true);
@@ -77,7 +78,7 @@ export default function SearchScreen({ navigation, route }) {
           </View>
         </>
       )}
-    </View>
+    </ScrollView>
   );
 }
 

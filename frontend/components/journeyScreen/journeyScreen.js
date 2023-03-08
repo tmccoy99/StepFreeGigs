@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  ScrollView,
 } from 'react-native';
 import RouteMap from '../map/map';
 import axios from 'axios';
@@ -55,7 +56,7 @@ export default function JourneyScreen({ navigation, route }) {
         ></Button>
         <Button title='Map' onPress={viewMap} testID='Map button'></Button>
       </View>
-      <View>
+      <ScrollView>
         {isLoading ? (
           <View style={styles.loadingContainer}>
             <Image
@@ -82,7 +83,7 @@ export default function JourneyScreen({ navigation, route }) {
             </View>
           )
         )}
-      </View>
+      </ScrollView>
     </>
   );
 }
