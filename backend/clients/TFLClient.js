@@ -1,6 +1,6 @@
-const axios = require('axios');
 const tflAPIKey = require('../tflAPIKey');
 const tflAPIId = require('../tflAPIId');
+const axios = require('./axios.js');
 
 class TFLCLient {
   constructor() {
@@ -9,7 +9,11 @@ class TFLCLient {
 
   async getDirections(start, destination) {
     const response = await axios.get(
-      `${this.baseUrl}/${start}/to/${destination}?accessibilityPreference=StepFreeToVehicle&app_key=${tflAPIKey}&app_id=${tflAPIId}`
+      `${this.baseUrl}/${start}/to/${destination}?accessibilityPreference=StepFreeToVehicle&app_key=${tflAPIKey}&app_id=${tflAPIId}`, {
+        cache: {
+          ttl: 1000 * 60 * 10, // 10 minutes
+        }
+      }
     );
 
     const directions = {

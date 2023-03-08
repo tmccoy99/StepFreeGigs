@@ -1,5 +1,5 @@
-const axios = require('axios');
 const googleAPIKey = require('../googleAPIKey');
+const axios = require('./axios.js');
 
 class GooglePlacesClient {
   constructor() {
@@ -11,7 +11,11 @@ class GooglePlacesClient {
 
   async getPlaceId(venueName) {
     const response = await axios.get(
-      `${this.baseUrlPlaceId}/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=${venueName}&key=${googleAPIKey}`
+      `${this.baseUrlPlaceId}/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=${venueName}&key=${googleAPIKey}`, {
+        cache: {
+          ttl: 1000 * 60 * 10, // 10 minutes
+        }
+      }
     );
 
     const venuePlaceId = {

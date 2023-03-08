@@ -1,16 +1,10 @@
-const axios = require('axios');
+// const Axios = require('axios');
 const ticketMasterAPIKey = require('../ticketMasterAPIKey');
-const axiosCache = require('axios-cache-interceptor/dev');
+const axios = require('./axios.js');
 
 class TicketmasterClient {
   constructor() {
     this.baseUrl = 'https://app.ticketmaster.com/discovery/v2';
-    // if (process.env.NODE_ENV == 'dev'){
-    //   this.axios = axiosCache.setupCache(Axios, {
-    //     debug:console.log
-    //   });
-    //   console.log('caching');
-    // // }
   }
 
   async getEvents(latlong, radius) {
@@ -23,28 +17,31 @@ class TicketmasterClient {
         sort: 'date,asc',
         classificationId: 'KZFzniwnSyZfZ7v7nJ',
       },
+      cache: {
+        ttl: 1000 * 60 * 10, // 10 minutes
+      }
     });
 
-    console.log(response.data);
+    let events = []
 
-    const events = response.data._embedded.events.map((event) => {
-      return {
-        id: event.id,
-        eventName: event.name,
-        url: event.url,
-        date: event.dates.start.dateTime,
-        priceRanges: event.priceRanges
-          ? `£${event.priceRanges[0].min} - £${event.priceRanges[1].max}`
-          : 'Prices not found!',
-        venue: event._embedded.venues[0].name,
-        venueAddress: event._embedded.venues[0].address.line1,
-        venuePostcode: event._embedded.venues[0].postalCode,
-        image: event.images[0].url,
-        distance: `${event.distance} miles`,
-      };
-    });
-
-    // console.log(response.cached);
+    if (response.data.hasOwnProperty('_embedded')){
+      events = response.data._embedded.events.map((event) => {
+        return {
+          id: event.id,
+          eventName: event.name,
+          url: event.url,
+          date: event.dates.start.dateTime,
+          priceRanges: event.priceRanges
+            ? `£${event.priceRanges[0].min} - £${event.priceRanges[1].max}`
+            : 'Prices not found!',
+          venue: event._embedded.venues[0].name,
+          venueAddress: event._embedded.venues[0].address.line1,
+          venuePostcode: event._embedded.venues[0].postalCode,
+          image: event.images[0].url,
+          distance: `${event.distance} miles`,
+        };
+      });
+    }
 
     return events;
   }
