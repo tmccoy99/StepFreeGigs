@@ -67,7 +67,7 @@ describe('Event component testing', () => {
   });
 
   test('Pressing view route takes you to journey screen', () => {
-    const mockNavigation = { navigate: jest.fn() };
+    const mockNavigation = { push: jest.fn() };
     const { getByText, getByTestId } = render(
       <Event
         eventData={{ venuePostcode: 'fakePostcode' }}
@@ -77,7 +77,7 @@ describe('Event component testing', () => {
     );
     fireEvent.press(getByTestId('eventButton'));
     fireEvent.press(getByText('View Route'));
-    expect(mockNavigation.navigate).toHaveBeenCalledWith('Journey', {
+    expect(mockNavigation.push).toHaveBeenCalledWith('Journey', {
       currentLocation: 'fakeLocation',
       endLocation: 'fakePostcode',
     });
