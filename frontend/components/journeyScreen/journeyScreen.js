@@ -42,8 +42,16 @@ export default function JourneyScreen({ navigation, route }) {
           title='Steps'
           onPress={viewSteps}
           testID='Steps button'
+          size='sm'
+          color='#FFA458'
         ></Button>
-        <Button title='Map' onPress={viewMap} testID='Map button'></Button>
+        <Button
+          title='Map'
+          onPress={viewMap}
+          testID='Map button'
+          size='sm'
+          color='#FFA458'
+        ></Button>
       </View>
       <View>
         {displayType === 'Steps'
