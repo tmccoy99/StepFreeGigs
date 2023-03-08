@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Button, Dimensions, View, Image } from 'react-native';
+import {
+  StyleSheet,
+  Button,
+  Dimensions,
+  View,
+  Image,
+  Text,
+} from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
@@ -44,11 +51,14 @@ export default function SearchScreen({ navigation, route }) {
         }}
       />
       {isLoading && (
-        <Image
-          testID='wheelchair'
-          source={wheelchair}
-          style={styles.wheelchair}
-        />
+        <View style={styles.loadingContainer}>
+          <Image
+            testID='wheelchair'
+            source={wheelchair}
+            style={styles.wheelchair}
+          />
+          <Text>Loading... </Text>
+        </View>
       )}
       {events &&
         events.map((data, index) => (
@@ -62,7 +72,7 @@ export default function SearchScreen({ navigation, route }) {
         ))}
       {!events && !isLoading && (
         <>
-          <View style={styles.loadingContainer}>
+          <View>
             <Image testID='logo' source={logo} style={styles.logo} />
           </View>
         </>
@@ -85,6 +95,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width,
     height: Dimensions.get('screen').height,
     alignItems: 'center',
-    justifyConten: 'center',
+    justifyContent: 'center',
   },
 });
