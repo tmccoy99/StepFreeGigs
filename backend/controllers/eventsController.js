@@ -1,6 +1,9 @@
 const TicketMasterClient = require('../clients/ticketMasterClient.js');
 const GooglePlacesClient = require('../clients/googlePlacesClient.js');
 
+const client = new TicketMasterClient();
+const googleClient = new GooglePlacesClient();
+
 const EventsController = {
   Index: async (req, res) => {
     try {
@@ -9,8 +12,7 @@ const EventsController = {
         res.status(400).send('Bad request');
         return;
       }
-      const client = new TicketMasterClient();
-      const googleClient = new GooglePlacesClient();
+      
       const events = await client.getEvents(latlong, radius);
       const accessibleEvents = await getAccessibleEvents(events, googleClient);
 
