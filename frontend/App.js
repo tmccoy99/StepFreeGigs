@@ -16,8 +16,6 @@ export default function App() {
     latitude: 51.537187,
     longitude: 0.050094,
   });
-
-  console.log(currentLocation);
   useEffect(() => {
     const getLocation = async () => {
       try {
@@ -43,9 +41,9 @@ export default function App() {
       <Stack.Navigator initialRouteName='Search'>
         <Stack.Screen
           name='Search'
-          component={SearchScreen}
-          initialParams={{ currentLocation }}
+          children={() => <SearchScreen currentLocation={currentLocation} />}
         />
+
         <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

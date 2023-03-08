@@ -12,13 +12,11 @@ import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
 import wheelchair from '../../assets/wheelchair-icon.gif';
 
-export default function SearchScreen({ navigation, route }) {
-  const { currentLocation } = route.params;
+export default function SearchScreen({ navigation, currentLocation }) {
   const [events, setEvents] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const onPress = async () => {
     try {
-      console.log(currentLocation);
       const eventsData = await axios.get(
         `https://step-free-gigs.onrender.com/events`,
         {
