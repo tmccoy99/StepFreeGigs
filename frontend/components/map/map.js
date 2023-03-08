@@ -9,18 +9,33 @@ export default RouteMap = ({ legs }) => {
     setMapLayout(event.nativeEvent.layout);
   };
 
-  const markers = legs.map((leg, index) => (
+  const startMarker = (
     <Marker
-      key={index}
+      key={0}
       coordinate={{
-        latitude: leg.arrivalPoint.lat,
-        longitude: leg.arrivalPoint.lon,
+        latitude: legs[0].departurePoint.lat,
+        longitude: legs[0].departurePoint.lon,
       }}
-      title={leg.instruction.summary}
-      pinColor='#f7a45f'
-      testID='marker'
+      title={`Start at ${legs[0].departurePoint.commonName}`}
+      pinColor='#009688'
+      testID='start-marker'
     />
-  ));
+  );
+
+  const markers = [startMarker].concat(
+    legs.map((leg, index) => (
+      <Marker
+        key={index + 1}
+        coordinate={{
+          latitude: leg.arrivalPoint.lat,
+          longitude: leg.arrivalPoint.lon,
+        }}
+        title={leg.instruction.summary?.replace('Walk', 'Travel')}
+        pinColor='#f7a45f'
+        testID='marker'
+      />
+    ))
+  );
 
   const polylines = legs.map((leg, index) => {
     const polylineCoords = JSON.parse(leg.path.lineString);
@@ -51,6 +66,14 @@ export default RouteMap = ({ legs }) => {
       longitude: legs[0].arrivalPoint.lon,
     };
     const coords = [startCoords, endCoords];
+
+    region = {
+      latitude: (startCoords.latitude + endCoords.latitude) / 2,
+      longitude: (startCoords.longitude + endCoords.longitude) / 2,
+      latitudeDelta: Math.abs(startCoords.latitude - endCoords.latitude) * 1.5,
+      longitudeDelta:
+        Math.abs(startCoords.longitude - endCoords.longitude) * 1.5,
+    };
 
     mapViewRef.current.fitToCoordinates(coords, {
       edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
