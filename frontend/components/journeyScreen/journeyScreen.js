@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+} from 'react-native';
+import RouteMap from '../map/map';
 import axios from 'axios';
+import Leg from '../leg/leg';
+import wheelchair from '../../assets/wheelchair-icon.gif';
 
-export default function JourneyScreen({
-  navigation,
-  startLocation,
-  endLocation,
-}) {
+export default function JourneyScreen({ navigation, route }) {
+  const { currentLocation, endLocation } = route.params;
   const [directions, setDirections] = useState(null);
   const [displayType, setDisplayType] = useState('Steps');
+  const [isLoading, setIsLoading] = useState(true);
   const viewMap = () => {
     setDisplayType('Map');
   };
@@ -18,8 +26,21 @@ export default function JourneyScreen({
 
   useEffect(() => {
     const getDirections = async () => {
-      const result = await axios.get('http://localhost:3000/');
-      setDirections(result);
+      try {
+        const result = await axios.get(
+          'https://step-free-gigs.onrender.com/journey',
+          {
+            params: {
+              start: `${currentLocation.latitude},${currentLocation.longitude}`,
+              destination: endLocation,
+            },
+          }
+        );
+        setDirections(result.data.directions);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
     };
     if (!directions) getDirections();
   }, []);
@@ -35,15 +56,51 @@ export default function JourneyScreen({
         <Button title='Map' onPress={viewMap} testID='Map button'></Button>
       </View>
       <View>
-        {displayType === 'Steps' ? (
+        {isLoading ? (
+          <View style={styles.loadingContainer}>
+            <Image
+              testID='wheelchair'
+              source={wheelchair}
+              style={styles.wheelchair}
+            />
+            <Text>Loading... </Text>
+          </View>
+        ) : displayType === 'Steps' ? (
           directions &&
-          directions.journeys.map((steps, index) => (
-            <Text testID='Step' key={`Journey-${index}`}></Text>
+          directions.journeys[0].legs.map((leg, index) => (
+            <Leg
+              key={`Journey-${index}`}
+              summary={leg.instruction.summary}
+              steps={leg.instruction.steps}
+            />
           ))
         ) : (
-          <Text testID='Map' />
+          directions && (
+            <View style={styles.map}>
+              <Text testID='Map'>Route map:</Text>
+              <RouteMap legs={directions.journeys[0].legs} />
+            </View>
+          )
         )}
       </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  map: {
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
+  },
+  wheelchair: {
+    height: 200,
+    width: 200,
+  },
+  loadingContainer: {
+    display: 'flex',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

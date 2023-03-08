@@ -5,6 +5,9 @@ import { mockTFLResponse } from '../../fixtures/mockTFLResponse';
 jest.mock('axios');
 
 describe('JourneyScreen component testing', () => {
+  const mockRouteProp = {
+    params: { currentLocation: 'SW99QH', endLocation: 'SW99SL' },
+  };
   let renderedComponent;
   beforeEach(() => {
     mockAxios.get.mockResolvedValueOnce(mockTFLResponse);
@@ -13,18 +16,14 @@ describe('JourneyScreen component testing', () => {
   describe('Button rendering', () => {
     test('displays Steps button', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
       expect(renderedComponent.queryByText('Steps')).not.toBeNull();
     });
 
     test('displays Map button', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
       expect(renderedComponent.queryByText('Map')).not.toBeNull();
     });
@@ -33,53 +32,43 @@ describe('JourneyScreen component testing', () => {
   describe('Map component display', () => {
     test('Map component not displayed before Map button pressed', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
       expect(renderedComponent.queryByTestId('Map')).toBeNull();
     });
 
     test('Map component displayed after Map button pressed', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
       fireEvent.press(renderedComponent.getByTestId('Map button'));
       expect(renderedComponent.queryByTestId('Map')).not.toBeNull();
     });
   });
 
-  describe('Step component display', () => {
-    test('renders step components initially', async () => {
+  describe('Leg component display', () => {
+    test('renders leg components initially', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
-      expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
+      expect(renderedComponent.queryAllByTestId('Leg').length).toBe(3);
     });
 
-    test('does not render step components after map button pressed', async () => {
+    test('does not render leg components after map button pressed', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
       fireEvent.press(renderedComponent.getByTestId('Map button'));
-      expect(renderedComponent.queryByTestId('Step')).toBeNull();
+      expect(renderedComponent.queryByText('Leg')).toBeNull();
     });
 
-    test('step components reappear once step button is pressed', async () => {
+    test('leg components reappear once step button is pressed', async () => {
       await waitFor(() => {
-        renderedComponent = render(
-          <JourneyScreen startLocation={'SW99QH'} endLocation={'SW99SL'} />
-        );
+        renderedComponent = render(<JourneyScreen route={mockRouteProp} />);
       });
       fireEvent.press(renderedComponent.getByTestId('Map button'));
       fireEvent.press(renderedComponent.getByTestId('Steps button'));
-      expect(renderedComponent.queryAllByTestId('Step').length).toBe(2);
+      expect(renderedComponent.queryAllByTestId('Leg').length).toBe(3);
     });
   });
 });

@@ -1,12 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
 import SearchScreen from './components/searchScreen/searchScreen';
-import Geolocation from '@react-native-community/geolocation';
-import { useState, useEffect } from 'react';
+import JourneyScreen from './components/journeyScreen/journeyScreen';
+import * as Location from 'expo-location';
+
+import React, { useState, useEffect } from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-const LocationContext = React.createContext('');
 
 export default function App() {
   const [currentLocation, setCurrentLocation] = useState({
@@ -14,26 +16,39 @@ export default function App() {
     latitude: 51.537187,
     longitude: 0.050094,
   });
+
+  console.log(currentLocation);
   useEffect(() => {
-    const getLocation = () => {
-      Geolocation.getCurrentPosition((info) => {
+    const getLocation = async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Permission to access location was denied');
+          return;
+        }
+        const location = await Location.getCurrentPositionAsync({});
         setCurrentLocation({
-          latitude: info.coords.latitude,
-          longitude: info.coords.longitude,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
         });
-      });
+      } catch (error) {
+        console.log('Error getting location', error);
+      }
     };
     getLocation();
   }, []);
-  const LocationContext = React.createContext(null);
+
   return (
-    <LocationContext.Provider currentLocation={currentLocation}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name='Search' component={SearchScreen}></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
-    </LocationContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Search'>
+        <Stack.Screen
+          name='Search'
+          component={SearchScreen}
+          initialParams={{ currentLocation }}
+        />
+        <Stack.Screen name='Journey' component={JourneyScreen}></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
