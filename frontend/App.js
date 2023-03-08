@@ -42,7 +42,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Search'>
         <Stack.Screen
-          name='Search'
+          name='Welcome'
           component={SearchScreen}
           initialParams={{ currentLocation }}
         />
