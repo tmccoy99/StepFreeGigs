@@ -1,5 +1,6 @@
-const googleAPIKey = require('../googleAPIKey');
+// const googleAPIKey = require('../googleAPIKey');
 const axios = require('./axios.js');
+const dotenv = require('dotenv');
 
 class GooglePlacesClient {
   constructor() {
@@ -11,7 +12,7 @@ class GooglePlacesClient {
 
   async getPlaceId(venueName) {
     const response = await axios.get(
-      `${this.baseUrlPlaceId}/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=${venueName}&key=${googleAPIKey}`, {
+      `${this.baseUrlPlaceId}/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=${venueName}&key=${process.env.GOOGLE_API_KEY}`, {
         cache: {
           ttl: 1000 * 60 * 10, // 10 minutes
         }
@@ -27,7 +28,7 @@ class GooglePlacesClient {
 
   async getVenueDetails(placeId) {
     const response = await axios.get(
-      `${this.baseUrlPlaceDetails}/json?place_id=${placeId}&key=${googleAPIKey}&fields=wheelchair_accessible_entrance%2Caddress_component`
+      `${this.baseUrlPlaceDetails}/json?place_id=${placeId}&key=${process.env.GOOGLE_API_KEY}&fields=wheelchair_accessible_entrance%2Caddress_component`
     );
 
     const venueDetails = {

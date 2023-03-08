@@ -1,6 +1,7 @@
-const tflAPIKey = require('../tflAPIKey');
-const tflAPIId = require('../tflAPIId');
+// const tflAPIKey = require('../tflAPIKey');
+// const tflAPIId = require('../tflAPIId');
 const axios = require('./axios.js');
+const dotenv = require('dotenv');
 
 class TFLCLient {
   constructor() {
@@ -9,7 +10,7 @@ class TFLCLient {
 
   async getDirections(start, destination) {
     const response = await axios.get(
-      `${this.baseUrl}/${start}/to/${destination}?accessibilityPreference=StepFreeToVehicle&app_key=${tflAPIKey}&app_id=${tflAPIId}`, {
+      `${this.baseUrl}/${start}/to/${destination}?accessibilityPreference=StepFreeToVehicle&app_key=${process.env.TFL_API_KEY}&app_id=${process.env.TFL_API_ID}`, {
         cache: {
           ttl: 1000 * 60 * 10, // 10 minutes
         }

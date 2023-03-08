@@ -1,6 +1,7 @@
 // const Axios = require('axios');
-const ticketMasterAPIKey = require('../ticketMasterAPIKey');
+// const ticketMasterAPIKey = require('../ticketMasterAPIKey');
 const axios = require('./axios.js');
+const dotenv = require('dotenv');
 
 class TicketmasterClient {
   constructor() {
@@ -10,7 +11,7 @@ class TicketmasterClient {
   async getEvents(latlong, radius) {
     const response = await axios.get(`${this.baseUrl}/events`, {
       params: {
-        apikey: ticketMasterAPIKey,
+        apikey: process.env.TICKET_MASTER_API_KEY,
         latlong,
         radius,
         unit: 'miles',
