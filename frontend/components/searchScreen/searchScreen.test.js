@@ -72,5 +72,20 @@ describe('SearchScreen component testing', () => {
       const searchScreen = render(<SearchScreen route={mockRoute} />);
       expect(searchScreen.queryByTestId('wheelchair-loading')).toBeNull();
     });
+
+    it('renders the loading animation while events are being fetched', () => {
+      const searchScreen = render(<SearchScreen route={mockRoute} />);
+      fireEvent.press(searchScreen.getByTestId('search-button'));
+      expect(searchScreen.queryByTestId('wheelchair-loading')).not.toBeNull();
+    });
+
+    it('does not render the loading animation after the events have been fetched', async () => {
+      const searchScreen = render(<SearchScreen route={mockRoute} />);
+      axios.get.mockResolvedValueOnce(fakeEvents);
+      await waitFor(() => {
+        fireEvent.press(searchScreen.getByTestId('search-button'));
+      });
+      expect(searchScreen.queryByTestId('wheelchair-loading')).toBeNull();
+    });
   });
 });
