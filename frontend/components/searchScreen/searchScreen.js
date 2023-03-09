@@ -77,7 +77,7 @@ export default function SearchScreen({ navigation, route }) {
   const renderLogo = () => {
     return (
       <>
-        <View>
+        <View style={styles.logoContainer}>
           <Image testID='logo' source={logo} style={styles.logo} />
         </View>
       </>
@@ -108,6 +108,13 @@ const styles = StyleSheet.create({
   logo: {
     width: 400,
     height: 400,
+  },
+  logoContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+    marginBottom: 'auto'
   },
   wheelchair: {
     height: 200,
