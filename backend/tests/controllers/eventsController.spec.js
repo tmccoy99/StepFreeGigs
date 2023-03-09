@@ -13,11 +13,23 @@ const mockEvents = [
     eventName: 'Event 1',
     url: 'https://www.ticketmaster.com/event1',
     date: '2023-03-01T19:00:00Z',
-    distance: '1.5 miles',
+    distance: '2.5 miles',
     priceRanges: '£10 - £40',
     venue: 'Test Venue 1',
     venueAddress: '123 Main St',
     venuePostcode: '12345',
+  },
+  {
+    id: '3',
+    image: 'www.imageurl.com',
+    eventName: 'Event 2',
+    url: 'https://www.ticketmaster.com/event2',
+    date: '2023-03-02T19:00:00Z',
+    distance: '5 miles',
+    priceRanges: 'Prices not found!',
+    venue: 'Test Venue 2',
+    venueAddress: '456 Elm St',
+    venuePostcode: '67890',
   },
   {
     id: '2',
@@ -25,7 +37,7 @@ const mockEvents = [
     eventName: 'Event 2',
     url: 'https://www.ticketmaster.com/event2',
     date: '2023-03-02T19:00:00Z',
-    distance: '2.5 miles',
+    distance: '1.5 miles',
     priceRanges: 'Prices not found!',
     venue: 'Test Venue 2',
     venueAddress: '456 Elm St',
@@ -118,6 +130,23 @@ describe('eventsController', () => {
       expect(Array.isArray(accessibleEvents)).toBe(true);
       expect(accessibleEvents.length).toBe(1);
       expect(accessibleEvents).toEqual([mockEvents[0]]);
+    });
+
+    it('returns an array of events sorted by distance in the response body', async () => {
+      getEventsSpy.mockResolvedValue(mockEvents);
+      getPlaceIdSpy.mockResolvedValue(mockPlaceId);
+      getVenueDetailsSpy.mockResolvedValue(mockVenueDetails);
+
+      const response = await request(app)
+        .get('/events')
+        .query({ latlong: '51.4919120,-0.1692555', radius: '5' });
+
+      const accessibleEvents = response.body.accessibleEvents;
+      expect(Array.isArray(accessibleEvents)).toBe(true);
+      expect(accessibleEvents.length).toBe(2);
+      expect(accessibleEvents[0]).toEqual(events[3]);
+      expect(accessibleEvents[1]).toEqual(events[0]);
+      expect(accessibleEvents[2]).toEqual(events[1]);
     });
   });
 });
