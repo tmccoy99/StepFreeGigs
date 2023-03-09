@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   Button,
@@ -6,16 +6,19 @@ import {
   View,
   Image,
   Text,
+  ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import Event from '../event/event';
 import logo from '../../assets/stepfreegigs-logo.png';
 import wheelchair from '../../assets/wheelchair-icon.gif';
 
-export default function SearchScreen({ navigation, currentLocation }) {
-  const [events, setEvents] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const onPress = async () => {
+export default function SearchScreen({ navigation, route }) {
+  const { currentLocation } = route.params;
+  const events = useRef([]);
+  const [eventsStatus, setEventsStatus] = useState('Unloaded');
+
+  const getEvents = async () => {
     try {
       const eventsData = await axios.get(
         `https://step-free-gigs.onrender.com/events`,
@@ -26,40 +29,26 @@ export default function SearchScreen({ navigation, currentLocation }) {
           },
         }
       );
-      setEvents(eventsData.data.accessibleEvents);
-      setIsLoading(false);
+      events.current = eventsData.data.accessibleEvents;
+      setEventsStatus('Loaded');
     } catch (error) {
       console.log('Error retrieving events:', error);
     }
   };
 
-  return (
-    <View testID='SearchScreen'>
-      <Button
-        onPress={() => {
-          onPress(), setIsLoading(true);
-        }}
-        title='Find events near me!'
-        testID='search-button'
-      />
-      <Button
-        title='clear'
-        onPress={() => {
-          setEvents(null), setIsLoading(false);
-        }}
-      />
-      {isLoading && (
-        <View style={styles.loadingContainer}>
-          <Image
-            testID='wheelchair'
-            source={wheelchair}
-            style={styles.wheelchair}
-          />
-          <Text>Loading... </Text>
-        </View>
-      )}
-      {events &&
-        events.map((data, index) => (
+  const renderClearButtonAndEvents = () => {
+    return (
+      <>
+        <Button
+          title='clear'
+          testID='clearButton'
+          size='sm'
+          color='#FFA458'
+          onPress={() => {
+            setEventsStatus('Unloaded');
+          }}
+        />
+        {events.current.map((data, index) => (
           <Event
             currentLocation={currentLocation}
             eventData={data}
@@ -68,14 +57,50 @@ export default function SearchScreen({ navigation, currentLocation }) {
             testID='Event'
           />
         ))}
-      {!events && !isLoading && (
-        <>
-          <View>
-            <Image testID='logo' source={logo} style={styles.logo} />
-          </View>
-        </>
-      )}
-    </View>
+      </>
+    );
+  };
+
+  const renderLoadingAnimation = () => {
+    return (
+      <View style={styles.loadingContainer}>
+        <Image
+          testID='wheelchair-loading'
+          source={wheelchair}
+          style={styles.wheelchair}
+        />
+        <Text>Loading... </Text>
+      </View>
+    );
+  };
+
+  const renderLogo = () => {
+    return (
+      <>
+        <View>
+          <Image testID='logo' source={logo} style={styles.logo} />
+        </View>
+      </>
+    );
+  };
+
+  return (
+    <ScrollView testID='SearchScreen'>
+      <Button
+        onPress={() => {
+          getEvents(), setEventsStatus('Loading');
+        }}
+        title='Find events near me!'
+        testID='search-button'
+        size='sm'
+        color='#FFA458'
+      />
+      {eventsStatus === 'Loaded'
+        ? renderClearButtonAndEvents()
+        : eventsStatus === 'Loading'
+        ? renderLoadingAnimation()
+        : renderLogo()}
+    </ScrollView>
   );
 }
 
