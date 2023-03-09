@@ -59,6 +59,29 @@ export default function SearchScreen({ navigation, route }) {
     );
   };
 
+  const renderLoadingAnimation = () => {
+    return (
+      <View style={styles.loadingContainer}>
+        <Image
+          testID='wheelchair-loading'
+          source={wheelchair}
+          style={styles.wheelchair}
+        />
+        <Text>Loading... </Text>
+      </View>
+    );
+  };
+
+  const renderLogo = () => {
+    return (
+      <>
+        <View>
+          <Image testID='logo' source={logo} style={styles.logo} />
+        </View>
+      </>
+    );
+  };
+
   return (
     <ScrollView testID='SearchScreen'>
       <Button
@@ -70,24 +93,11 @@ export default function SearchScreen({ navigation, route }) {
         size='sm'
         color='#FFA458'
       />
-      {eventsStatus === 'Loaded' ? (
-        renderClearButtonAndEvents()
-      ) : eventsStatus === 'Loading' ? (
-        <View style={styles.loadingContainer}>
-          <Image
-            testID='wheelchair-loading'
-            source={wheelchair}
-            style={styles.wheelchair}
-          />
-          <Text>Loading... </Text>
-        </View>
-      ) : (
-        <>
-          <View>
-            <Image testID='logo' source={logo} style={styles.logo} />
-          </View>
-        </>
-      )}
+      {eventsStatus === 'Loaded'
+        ? renderClearButtonAndEvents()
+        : eventsStatus === 'Loading'
+        ? renderLoadingAnimation()
+        : renderLogo()}
     </ScrollView>
   );
 }
