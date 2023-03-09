@@ -24,7 +24,7 @@ const EventsController = {
   },
 };
 
-async function getAccessibleEvents(events, googleClient) {
+const getAccessibleEvents = async (events, googleClient) => {
   const accessibleEvents = [];
   for (const event of events) {
     if (accessibleEvents.length === 10) break;
@@ -39,7 +39,11 @@ async function getAccessibleEvents(events, googleClient) {
     }
   }
 
-  accessibleEvents.sort((a, b) => {
+  return sortEventsByDistance(accessibleEvents);
+};
+
+const sortEventsByDistance = (events) => {
+  return events.sort((a, b) => {
     const aDistance = parseFloat(
       a.distance.slice(0, a.distance.indexOf(' miles'))
     );
@@ -48,8 +52,6 @@ async function getAccessibleEvents(events, googleClient) {
     );
     return aDistance - bDistance;
   });
-
-  return accessibleEvents;
-}
+};
 
 module.exports = EventsController;
