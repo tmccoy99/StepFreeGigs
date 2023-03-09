@@ -19,7 +19,6 @@ export default function SearchScreen({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(false);
   const onPress = async () => {
     try {
-      console.log(currentLocation);
       const eventsData = await axios.get(
         `https://step-free-gigs.onrender.com/events`,
         {
@@ -59,7 +58,7 @@ export default function SearchScreen({ navigation, route }) {
       {isLoading && (
         <View style={styles.loadingContainer}>
           <Image
-            testID='wheelchair'
+            testID='wheelchair-loading'
             source={wheelchair}
             style={styles.wheelchair}
           />

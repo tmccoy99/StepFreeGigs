@@ -2,10 +2,8 @@ import { render, fireEvent, act, waitFor } from '@testing-library/react-native';
 import SearchScreen from './searchScreen';
 import axios from 'axios';
 import fakeEvents from '../../fixtures/mockEvents';
-const currentLocation = {};
 
 jest.mock('axios');
-const baseURL = process.env.NATIVE_APP_API_URL;
 const mockRoute = {
   params: {
     currentLocation: {
@@ -52,14 +50,20 @@ describe('SearchScreen component testing', () => {
   it('does does not render the clear button when no events have been loaded', () => {
     const { queryByTestId } = render(<SearchScreen route={mockRoute} />);
     expect(queryByTestId('clearButton')).toBeNull();
-  })
+  });
 
   it('renders the clear button when the events have been loaded', async () => {
-    const { queryByTestId, queryByText } = render(<SearchScreen route={mockRoute} />);
+    const { queryByTestId, queryByText } = render(
+      <SearchScreen route={mockRoute} />
+    );
     axios.get.mockResolvedValueOnce(fakeEvents);
     await waitFor(() => {
       fireEvent.press(queryByText('Find events near me!'));
     });
     expect(queryByTestId('clearButton')).toBeDefined();
-  })
+  });
+  it('does not render the loading animation initially', () => {
+    const searchScreen = render(<SearchScreen route={mockRoute} />);
+    expect(searchScreen.queryByTestId('wheelchair-loading')).toBeNull();
+  });
 });
