@@ -14,7 +14,7 @@ describe('Event component testing', () => {
     const { getByText } = render(
       <Event eventData={{ priceRanges: '£22 - £30 ' }} />
     );
-    const textElement = getByText('£22 - £30 ');
+    const textElement = getByText('22 - 30');
     expect(textElement).toBeDefined();
   });
 
@@ -28,7 +28,7 @@ describe('Event component testing', () => {
     const { getByText } = render(
       <Event eventData={{ distance: '1.32 miles' }} />
     );
-    const textElement = getByText('1.32 miles');
+    const textElement = getByText('1.32 mi');
     expect(textElement).toBeDefined();
   });
 
