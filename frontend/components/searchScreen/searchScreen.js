@@ -36,6 +36,29 @@ export default function SearchScreen({ navigation, route }) {
     }
   };
 
+  const renderClearButtonAndEvents = () => {
+    return (
+      <>
+        <Button
+          title='clear'
+          testID='clearButton'
+          onPress={() => {
+            setEventsStatus('Unloaded');
+          }}
+        />
+        {events.current.map((data, index) => (
+          <Event
+            currentLocation={currentLocation}
+            eventData={data}
+            key={index}
+            navigation={navigation}
+            testID='Event'
+          />
+        ))}
+      </>
+    );
+  };
+
   return (
     <ScrollView testID='SearchScreen'>
       <Button
@@ -48,24 +71,7 @@ export default function SearchScreen({ navigation, route }) {
         color='#FFA458'
       />
       {eventsStatus === 'Loaded' ? (
-        <>
-          <Button
-            title='clear'
-            testID='clearButton'
-            onPress={() => {
-              setEventsStatus('Unloaded');
-            }}
-          />
-          {events.current.map((data, index) => (
-            <Event
-              currentLocation={currentLocation}
-              eventData={data}
-              key={index}
-              navigation={navigation}
-              testID='Event'
-            />
-          ))}
-        </>
+        renderClearButtonAndEvents()
       ) : eventsStatus === 'Loading' ? (
         <View style={styles.loadingContainer}>
           <Image
