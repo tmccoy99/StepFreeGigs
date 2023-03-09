@@ -17,7 +17,7 @@ export default function SearchScreen({ navigation, route }) {
   const { currentLocation } = route.params;
   const [events, setEvents] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const onPress = async () => {
+  const getEvents = async () => {
     try {
       const eventsData = await axios.get(
         `https://step-free-gigs.onrender.com/events`,
@@ -39,7 +39,7 @@ export default function SearchScreen({ navigation, route }) {
     <ScrollView testID='SearchScreen'>
       <Button
         onPress={() => {
-          onPress(), setIsLoading(true);
+          getEvents(), setIsLoading(true);
         }}
         title='Find events near me!'
         testID='search-button'
