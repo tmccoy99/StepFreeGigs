@@ -12,7 +12,7 @@ const EventsController = {
         res.status(400).send('Bad request');
         return;
       }
-      
+
       const events = await client.getEvents(latlong, radius);
       const accessibleEvents = await getAccessibleEvents(events, googleClient);
 
@@ -27,7 +27,7 @@ const EventsController = {
 async function getAccessibleEvents(events, googleClient) {
   const accessibleEvents = [];
   for (const event of events) {
-    if (accessibleEvents.length === 5) break;
+    if (accessibleEvents.length === 10) break;
 
     const venueName = event.venue;
     const placeId = await googleClient.getPlaceId(venueName);
@@ -38,6 +38,17 @@ async function getAccessibleEvents(events, googleClient) {
       accessibleEvents.push(event);
     }
   }
+
+  accessibleEvents.sort((a, b) => {
+    const aDistance = parseFloat(
+      a.distance.slice(0, a.distance.indexOf(' miles'))
+    );
+    const bDistance = parseFloat(
+      b.distance.slice(0, b.distance.indexOf(' miles'))
+    );
+    return aDistance - bDistance;
+  });
+
   return accessibleEvents;
 }
 
