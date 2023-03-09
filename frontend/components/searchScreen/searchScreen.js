@@ -51,6 +51,8 @@ export default function SearchScreen({ navigation, route }) {
         <Button
           title='clear'
           testID='clearButton'
+          size='sm'
+          color='#FFA458'
           onPress={() => {
             setEvents(null), setIsLoading(false);
           }}
