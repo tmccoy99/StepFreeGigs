@@ -35,7 +35,7 @@ export default function Event({ eventData, navigation, currentLocation }) {
             <BuyTicketsButton url={url} />
             <Button
               onPress={() => {
-                navigation.navigate('Journey', {
+                navigation.push('Journey', {
                   currentLocation: currentLocation,
                   endLocation: venuePostcode,
                 });
