@@ -143,7 +143,7 @@ describe('eventsController', () => {
 
       const accessibleEvents = response.body.accessibleEvents;
       expect(Array.isArray(accessibleEvents)).toBe(true);
-      expect(accessibleEvents.length).toBe(2);
+      expect(accessibleEvents).toEqual(mockEvents);
       expect(accessibleEvents[0]).toEqual(events[3]);
       expect(accessibleEvents[1]).toEqual(events[0]);
       expect(accessibleEvents[2]).toEqual(events[1]);
