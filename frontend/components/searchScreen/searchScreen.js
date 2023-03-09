@@ -46,13 +46,14 @@ export default function SearchScreen({ navigation, route }) {
         size='sm'
         color='#FFA458'
       />
-      {events && (
+      {events ? (
         <>
           <Button
             title='clear'
             testID='clearButton'
             onPress={() => {
-              setEvents(null), setIsLoading(false);
+              setEvents(null);
+              setIsLoading(false);
             }}
           />
           {events.map((data, index) => (
@@ -65,9 +66,7 @@ export default function SearchScreen({ navigation, route }) {
             />
           ))}
         </>
-      )}
-
-      {isLoading && (
+      ) : isLoading ? (
         <View style={styles.loadingContainer}>
           <Image
             testID='wheelchair-loading'
@@ -76,8 +75,7 @@ export default function SearchScreen({ navigation, route }) {
           />
           <Text>Loading... </Text>
         </View>
-      )}
-      {!events && !isLoading && (
+      ) : (
         <>
           <View>
             <Image testID='logo' source={logo} style={styles.logo} />
