@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   Button,
@@ -15,8 +15,9 @@ import wheelchair from '../../assets/wheelchair-icon.gif';
 
 export default function SearchScreen({ navigation, route }) {
   const { currentLocation } = route.params;
-  const [events, setEvents] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const events = useRef([]);
+  const [eventsStatus, setEventsStatus] = useState('Unloaded');
+
   const getEvents = async () => {
     try {
       const eventsData = await axios.get(
@@ -28,8 +29,8 @@ export default function SearchScreen({ navigation, route }) {
           },
         }
       );
-      setEvents(eventsData.data.accessibleEvents);
-      setIsLoading(false);
+      events.current = eventsData.data.accessibleEvents;
+      setEventsStatus('Loaded');
     } catch (error) {
       console.log('Error retrieving events:', error);
     }
@@ -39,24 +40,23 @@ export default function SearchScreen({ navigation, route }) {
     <ScrollView testID='SearchScreen'>
       <Button
         onPress={() => {
-          getEvents(), setIsLoading(true);
+          getEvents(), setEventsStatus('Loading');
         }}
         title='Find events near me!'
         testID='search-button'
         size='sm'
         color='#FFA458'
       />
-      {events ? (
+      {eventsStatus === 'Loaded' ? (
         <>
           <Button
             title='clear'
             testID='clearButton'
             onPress={() => {
-              setEvents(null);
-              setIsLoading(false);
+              setEventsStatus('Unloaded');
             }}
           />
-          {events.map((data, index) => (
+          {events.current.map((data, index) => (
             <Event
               currentLocation={currentLocation}
               eventData={data}
@@ -66,7 +66,7 @@ export default function SearchScreen({ navigation, route }) {
             />
           ))}
         </>
-      ) : isLoading ? (
+      ) : eventsStatus === 'Loading' ? (
         <View style={styles.loadingContainer}>
           <Image
             testID='wheelchair-loading'
