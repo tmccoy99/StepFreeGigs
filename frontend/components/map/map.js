@@ -17,24 +17,37 @@ export default RouteMap = ({ legs }) => {
         longitude: legs[0].departurePoint.lon,
       }}
       title={`Start at ${legs[0].departurePoint.commonName}`}
+      description={legs[0].instruction.summary?.replace('Walk', 'Travel')}
+      numberOfLines={2}
       pinColor='#009688'
       testID='start-marker'
     />
   );
 
   const markers = [startMarker].concat(
-    legs.map((leg, index) => (
-      <Marker
-        key={index + 1}
-        coordinate={{
-          latitude: leg.arrivalPoint.lat,
-          longitude: leg.arrivalPoint.lon,
-        }}
-        title={leg.instruction.summary?.replace('Walk', 'Travel')}
-        pinColor='#f7a45f'
-        testID='marker'
-      />
-    ))
+    legs.map((leg, index) => {
+      const nextLeg = legs.slice(index + 1, index + 2)[0];
+      const title =
+        nextLeg?.instruction.summary?.replace('Walk', 'Travel') ||
+        `Arrive at ${leg.arrivalPoint.commonName}`;
+      const description = nextLeg
+        ? `from ${nextLeg.departurePoint.commonName}`
+        : '';
+
+      return (
+        <Marker
+          key={index + 1}
+          coordinate={{
+            latitude: leg.arrivalPoint.lat,
+            longitude: leg.arrivalPoint.lon,
+          }}
+          title={title}
+          description={description}
+          pinColor='#f7a45f'
+          testID='marker'
+        />
+      );
+    })
   );
 
   const polylines = legs.map((leg, index) => {
@@ -56,23 +69,16 @@ export default RouteMap = ({ legs }) => {
   });
 
   let region = null;
-  if (mapLayout) {
-    const startCoords = {
-      latitude: legs[0].departurePoint.lat,
-      longitude: legs[0].departurePoint.lon,
-    };
-    const endCoords = {
-      latitude: legs[0].arrivalPoint.lat,
-      longitude: legs[0].arrivalPoint.lon,
-    };
-    const coords = [startCoords, endCoords];
+  if (mapLayout && legs.length > 0) {
+    const start = legs[0].departurePoint;
+    const end = legs[0].arrivalPoint;
+    const coords = [start, end];
 
     region = {
-      latitude: (startCoords.latitude + endCoords.latitude) / 2,
-      longitude: (startCoords.longitude + endCoords.longitude) / 2,
-      latitudeDelta: Math.abs(startCoords.latitude - endCoords.latitude) * 1.5,
-      longitudeDelta:
-        Math.abs(startCoords.longitude - endCoords.longitude) * 1.5,
+      latitude: (start.lat + end.lat) / 2,
+      longitude: (start.lon + end.lon) / 2,
+      latitudeDelta: Math.abs(start.lat - end.lat) * 1.5,
+      longitudeDelta: Math.abs(start.lon - end.lon) * 1.5,
     };
 
     mapViewRef.current.fitToCoordinates(coords, {
