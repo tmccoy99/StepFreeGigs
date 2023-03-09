@@ -47,14 +47,26 @@ export default function SearchScreen({ navigation, route }) {
         color='#FFA458'
       />
       {events && (
-        <Button
-          title='clear'
-          testID='clearButton'
-          onPress={() => {
-            setEvents(null), setIsLoading(false);
-          }}
-        />
+        <>
+          <Button
+            title='clear'
+            testID='clearButton'
+            onPress={() => {
+              setEvents(null), setIsLoading(false);
+            }}
+          />
+          {events.map((data, index) => (
+            <Event
+              currentLocation={currentLocation}
+              eventData={data}
+              key={index}
+              navigation={navigation}
+              testID='Event'
+            />
+          ))}
+        </>
       )}
+
       {isLoading && (
         <View style={styles.loadingContainer}>
           <Image
@@ -65,16 +77,6 @@ export default function SearchScreen({ navigation, route }) {
           <Text>Loading... </Text>
         </View>
       )}
-      {events &&
-        events.map((data, index) => (
-          <Event
-            currentLocation={currentLocation}
-            eventData={data}
-            key={index}
-            navigation={navigation}
-            testID='Event'
-          />
-        ))}
       {!events && !isLoading && (
         <>
           <View>
