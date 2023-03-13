@@ -2,7 +2,6 @@
 const axios = require('./axios.js');
 const dotenv = require('dotenv');
 
-
 class GooglePlacesClient {
   constructor() {
     this.baseUrlPlaceId =
@@ -13,15 +12,16 @@ class GooglePlacesClient {
 
   async getPlaceId(venueName) {
     const response = await axios.get(
-      `${this.baseUrlPlaceId}/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=${venueName}&key=${process.env.GOOGLE_API_KEY}`, {
+      `${this.baseUrlPlaceId}/json?fields=formatted_address%2Cname%2Cplace_id&inputtype=textquery&input=${venueName}&key=${process.env.GOOGLE_API_KEY}`,
+      {
         cache: {
           ttl: 1000 * 60 * 10, // 10 minutes
-        }
+        },
       }
     );
 
     const venuePlaceId = {
-      placeId: response.data.candidates[0].place_id,
+      placeId: response.data.candidates[0]?.place_id,
     };
 
     return venuePlaceId;
